@@ -1,4 +1,4 @@
-# quran_mutashibihat_app
+# Quran mutashabihat companion
 
 A new Flutter project.
 
