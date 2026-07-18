@@ -29,11 +29,17 @@ class SurahIndexScreen extends ConsumerWidget {
             return ListTile(
               leading: CircleAvatar(child: Text('${s.id}')),
               title: Text('${s.nameArabic}   ${s.nameSimple}'),
-              subtitle: Text('${s.mutashabihatAyahCount} Mutashabihat ayahs'),
+              subtitle: Text(
+                '${s.mutashabihatAyahCount} Mutashabihat ayahs and ${s.versesCount - 1} total ayahs',
+              ),
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => MutashabihatAyahsScreen(surah: s.id),
+                  builder: (_) => MutashabihatAyahsScreen(
+                    surah: s.id,
+                    nameArabic: s.nameArabic,
+                    nameSimple: s.nameSimple,
+                  ),
                 ),
               ),
             );
@@ -49,14 +55,21 @@ class SurahIndexScreen extends ConsumerWidget {
 // ---------------------------------------------------------------------
 class MutashabihatAyahsScreen extends ConsumerWidget {
   final int surah;
-  const MutashabihatAyahsScreen({super.key, required this.surah});
+  final String nameArabic;
+  final String nameSimple;
+  const MutashabihatAyahsScreen({
+    super.key,
+    required this.surah,
+    required this.nameArabic,
+    required this.nameSimple,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ayahsAsync = ref.watch(mutashabihatAyahsProvider(surah));
 
     return Scaffold(
-      appBar: AppBar(title: Text('Surah $surah')),
+      appBar: AppBar(title: Text(nameArabic)),
       body: ayahsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Failed to load ayahs: $e')),
