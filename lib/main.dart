@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_mutashibihat_app/files/example_usage.dart';
 
 void main() async {
@@ -30,8 +31,24 @@ class MutashabihatApp extends StatelessWidget {
           secondary: const Color(0xFF004D40),
           background: const Color(0xFFF9FAFB), // Clean off-white background
         ),
-        // Configure global typography settings
-        fontFamily: 'SF Pro Display', // Standard system font
+        // Configure global typography settings with Amiri font for proper Arabic support
+        textTheme: TextTheme(
+          bodyLarge: GoogleFonts.amiri(),
+          bodyMedium: GoogleFonts.amiri(),
+          bodySmall: GoogleFonts.amiri(),
+          displayLarge: GoogleFonts.amiri(),
+          displayMedium: GoogleFonts.amiri(),
+          displaySmall: GoogleFonts.amiri(),
+          headlineLarge: GoogleFonts.amiri(),
+          headlineMedium: GoogleFonts.amiri(),
+          headlineSmall: GoogleFonts.amiri(),
+          titleLarge: GoogleFonts.amiri(),
+          titleMedium: GoogleFonts.amiri(),
+          titleSmall: GoogleFonts.amiri(),
+          labelLarge: GoogleFonts.amiri(),
+          labelMedium: GoogleFonts.amiri(),
+          labelSmall: GoogleFonts.amiri(),
+        ),
       ),
       home: const SurahIndexScreen(),
     );

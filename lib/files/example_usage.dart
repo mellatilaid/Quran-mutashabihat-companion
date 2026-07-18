@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'mutashabihat_providers.dart';
 
@@ -68,7 +69,7 @@ class MutashabihatAyahsScreen extends ConsumerWidget {
               title: Text(
                 a.text,
                 textDirection: TextDirection.rtl,
-                style: const TextStyle(fontSize: 20),
+                style: GoogleFonts.amiri(fontSize: 20),
               ),
               onTap: () => Navigator.push(
                 context,
@@ -118,7 +119,7 @@ class AyahDetailScreen extends ConsumerWidget {
                         detail.isHighlighted(w.wordIndex) ?? false;
                     return Text(
                       w.text,
-                      style: TextStyle(
+                      style: GoogleFonts.amiri(
                         fontSize: 22,
                         backgroundColor: highlighted
                             ? Colors.amber.shade200
