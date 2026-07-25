@@ -1,0 +1,143 @@
+{
+  "global": {
+    "fontFamilies": {
+      "arabic": { "value": "Amiri", "type": "fontFamilies" },
+      "display": { "value": "Newsreader", "type": "fontFamilies" },
+      "body": { "value": "Inter", "type": "fontFamilies" }
+    },
+    "fontWeights": {
+      "regular": { "value": "400", "type": "fontWeights" },
+      "medium": { "value": "500", "type": "fontWeights" },
+      "semibold": { "value": "600", "type": "fontWeights" },
+      "bold": { "value": "700", "type": "fontWeights" }
+    },
+    "fontSize": {
+      "caption": { "value": "11", "type": "fontSizes" },
+      "label": { "value": "12", "type": "fontSizes" },
+      "bodySmall": { "value": "13.5", "type": "fontSizes" },
+      "body": { "value": "14.5", "type": "fontSizes" },
+      "arabicSmall": { "value": "17", "type": "fontSizes" },
+      "arabicBody": { "value": "20", "type": "fontSizes" },
+      "arabicLarge": { "value": "22", "type": "fontSizes" },
+      "headingSm": { "value": "18", "type": "fontSizes" },
+      "headingLg": { "value": "26", "type": "fontSizes" }
+    },
+    "typography": {
+      "topBarTitle": {
+        "value": {
+          "fontFamily": "{fontFamilies.display}",
+          "fontWeight": "{fontWeights.semibold}",
+          "fontSize": "{fontSize.headingSm}",
+          "lineHeight": "AUTO"
+        },
+        "type": "typography"
+      },
+      "sectionLabel": {
+        "value": {
+          "fontFamily": "{fontFamilies.body}",
+          "fontWeight": "{fontWeights.bold}",
+          "fontSize": "{fontSize.label}",
+          "letterSpacing": "0.4",
+          "lineHeight": "AUTO"
+        },
+        "type": "typography"
+      },
+      "ayahText": {
+        "value": {
+          "fontFamily": "{fontFamilies.arabic}",
+          "fontWeight": "{fontWeights.regular}",
+          "fontSize": "{fontSize.arabicBody}",
+          "lineHeight": "170%"
+        },
+        "type": "typography"
+      },
+      "buttonLabel": {
+        "value": {
+          "fontFamily": "{fontFamilies.body}",
+          "fontWeight": "{fontWeights.semibold}",
+          "fontSize": "{fontSize.body}",
+          "lineHeight": "AUTO"
+        },
+        "type": "typography"
+      }
+    },
+    "spacing": {
+      "xs": { "value": "4", "type": "spacing" },
+      "sm": { "value": "8", "type": "spacing" },
+      "md": { "value": "12", "type": "spacing" },
+      "lg": { "value": "16", "type": "spacing" },
+      "xl": { "value": "20", "type": "spacing" },
+      "2xl": { "value": "24", "type": "spacing" }
+    },
+    "borderRadius": {
+      "sm": { "value": "6", "type": "borderRadius" },
+      "md": { "value": "8", "type": "borderRadius" },
+      "lg": { "value": "12", "type": "borderRadius" },
+      "xl": { "value": "16", "type": "borderRadius" },
+      "2xl": { "value": "24", "type": "borderRadius" },
+      "full": { "value": "999", "type": "borderRadius" }
+    },
+    "borderWidth": {
+      "hairline": { "value": "1", "type": "borderWidth" },
+      "thick": { "value": "1.5", "type": "borderWidth" },
+      "underline": { "value": "3", "type": "borderWidth" }
+    }
+  },
+  "light": {
+    "color": {
+      "teal": { "value": "#0F6B62", "type": "color" },
+      "tealDark": { "value": "#0B4E47", "type": "color" },
+      "tealSoft": { "value": "#E4F0EE", "type": "color" },
+      "gold": { "value": "#B8862E", "type": "color" },
+      "goldSoft": { "value": "#F6E9CE", "type": "color" },
+      "rose": { "value": "#9C4E68", "type": "color" },
+      "roseSoft": { "value": "#F3E2E8", "type": "color" },
+      "paper": { "value": "#FBF7EF", "type": "color" },
+      "paperDeep": { "value": "#F3EDDF", "type": "color" },
+      "cardBg": { "value": "#FFFFFF", "type": "color" },
+      "ink": { "value": "#20302C", "type": "color" },
+      "inkSoft": { "value": "#5C6B67", "type": "color" },
+      "line": { "value": "#E2DAC7", "type": "color" },
+      "danger": { "value": "#A34632", "type": "color" },
+      "dangerSoft": { "value": "#FBEAE5", "type": "color" },
+      "frame": { "value": "#0B4E47", "type": "color" }
+    }
+  },
+  "dark": {
+    "color": {
+      "teal": { "value": "#4FBFAE", "type": "color" },
+      "tealDark": { "value": "#0A1715", "type": "color" },
+      "tealSoft": { "value": "#153531", "type": "color" },
+      "gold": { "value": "#E3B45C", "type": "color" },
+      "goldSoft": { "value": "#3A2E14", "type": "color" },
+      "rose": { "value": "#D98CA8", "type": "color" },
+      "roseSoft": { "value": "#3A2530", "type": "color" },
+      "paper": { "value": "#121917", "type": "color" },
+      "paperDeep": { "value": "#0A0F0E", "type": "color" },
+      "cardBg": { "value": "#1B2422", "type": "color" },
+      "ink": { "value": "#EDEDE4", "type": "color" },
+      "inkSoft": { "value": "#93A19C", "type": "color" },
+      "line": { "value": "#2A3532", "type": "color" },
+      "danger": { "value": "#E38872", "type": "color" },
+      "dangerSoft": { "value": "#33201B", "type": "color" },
+      "frame": { "value": "#06110F", "type": "color" }
+    }
+  },
+  "$themes": [
+    {
+      "id": "light-theme",
+      "name": "Light",
+      "group": "Mode",
+      "selectedTokenSets": { "global": "enabled", "light": "enabled" }
+    },
+    {
+      "id": "dark-theme",
+      "name": "Dark",
+      "group": "Mode",
+      "selectedTokenSets": { "global": "enabled", "dark": "enabled" }
+    }
+  ],
+  "$metadata": {
+    "tokenSetOrder": ["global", "light", "dark"]
+  }
+}
