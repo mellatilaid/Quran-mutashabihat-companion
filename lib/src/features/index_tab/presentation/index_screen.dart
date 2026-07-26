@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
 
 import '../../../core/providers.dart';
-import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
 
 /// Screen 1: Surah Index - Lists all 114 surahs with Mutashabihat ayah counts.
 class IndexScreen extends ConsumerWidget {
@@ -18,7 +18,7 @@ class IndexScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)!.mutashabihatCompanion,
+          AppLocalizations.of(context).mutashabihatCompanion,
           style: GoogleFonts.newsreader(
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -60,7 +60,7 @@ class IndexScreen extends ConsumerWidget {
                   textDirection: TextDirection.rtl,
                 ),
                 subtitle: Text(
-                  '${surah.versesCount} ${AppLocalizations.of(context)!.verses} • ${surah.mutashabihatAyahCount} ${AppLocalizations.of(context)!.mutashabihat}',
+                  '${surah.versesCount} ${AppLocalizations.of(context).verses} • ${surah.mutashabihatAyahCount} ${AppLocalizations.of(context).mutashabihat}',
                   style: GoogleFonts.inter(
                     fontSize: 12,
                     color: isDark

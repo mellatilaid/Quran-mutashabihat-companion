@@ -18,7 +18,7 @@ class MyAyahsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)!.myAyahs,
+          AppLocalizations.of(context).myAyahs,
           style: GoogleFonts.newsreader(
             fontSize: 20,
             fontWeight: FontWeight.w600,

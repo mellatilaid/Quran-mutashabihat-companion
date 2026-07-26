@@ -18,7 +18,7 @@ class FavoritesScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)!.favorites,
+          AppLocalizations.of(context).favorites,
           style: GoogleFonts.newsreader(
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -46,7 +46,7 @@ class FavoritesScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    AppLocalizations.of(context)!.noFavoritesYet,
+                    AppLocalizations.of(context).noFavoritesYet,
                     style: GoogleFonts.newsreader(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -57,7 +57,7 @@ class FavoritesScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    AppLocalizations.of(context)!.addFavoritesFromIndexTab,
+                    AppLocalizations.of(context).addFavoritesFromIndexTab,
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       color: isDark

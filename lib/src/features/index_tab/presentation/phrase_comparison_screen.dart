@@ -26,7 +26,7 @@ class PhraseComparisonScreen extends ConsumerWidget {
           onPressed: () => context.pop(),
         ),
         title: Text(
-          AppLocalizations.of(context)!.comparePhrase,
+          AppLocalizations.of(context).comparePhrase,
           style: GoogleFonts.newsreader(
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -67,7 +67,7 @@ class PhraseComparisonScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    AppLocalizations.of(context)!.occurrencesCount,
+                    AppLocalizations.of(context).occurrencesCount,
                     style: GoogleFonts.inter(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,

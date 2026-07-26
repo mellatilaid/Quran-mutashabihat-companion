@@ -40,7 +40,7 @@ class _MyAyahsAddScreenState extends ConsumerState<MyAyahsAddScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)!.addADifficultAyah,
+          AppLocalizations.of(context).addADifficultAyah,
           style: GoogleFonts.newsreader(
             fontSize: 20,
             fontWeight: FontWeight.w600,

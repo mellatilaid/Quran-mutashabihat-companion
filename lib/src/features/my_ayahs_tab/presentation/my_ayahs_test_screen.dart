@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
+
 import '../../../core/models.dart';
 import '../../../core/providers.dart';
 import '../../../core/widgets/widgets_index.dart';
@@ -56,7 +57,7 @@ class _MyAyahsTestScreenState extends ConsumerState<MyAyahsTestScreen> {
       return Scaffold(
         appBar: AppBar(
           title: Text(
-            AppLocalizations.of(context)!.startTestMode,
+            AppLocalizations.of(context).startTestMode,
             style: GoogleFonts.newsreader(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -90,8 +91,8 @@ class _MyAyahsTestScreenState extends ConsumerState<MyAyahsTestScreen> {
             showDialog(
               context: context,
               builder: (context) => ConfirmDialog(
-                title: AppLocalizations.of(context)!.exitTest,
-                message: AppLocalizations.of(context)!.yourProgressWillBeLost,
+                title: AppLocalizations.of(context).exitTest,
+                message: AppLocalizations.of(context).yourProgressWillBeLost,
                 isDangerous: true,
                 onConfirm: () {
                   context.go('/my-ayahs');
