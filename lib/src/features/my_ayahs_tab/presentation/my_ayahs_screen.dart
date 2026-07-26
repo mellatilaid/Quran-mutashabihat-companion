@@ -129,8 +129,10 @@ class MyAyahsScreen extends ConsumerWidget {
                   },
                   trailing: IconButton(
                     icon: const Icon(Icons.delete_outline),
-                    onPressed: () {
-                      // TODO: Implement delete with undo
+                    onPressed: () async {
+                      await ref
+                          .read(myAyahsProvider.notifier)
+                          .removeAyah(myAyah.surahId, myAyah.ayahNum);
                     },
                   ),
                 ),

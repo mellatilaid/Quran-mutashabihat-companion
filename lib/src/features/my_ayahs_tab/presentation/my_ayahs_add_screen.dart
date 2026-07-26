@@ -149,11 +149,14 @@ class _MyAyahsAddScreenState extends ConsumerState<MyAyahsAddScreen> {
                             ),
                             IconButton(
                               icon: const Icon(Icons.add_circle),
-                              onPressed: () {
-                                ref
-                                    .read(userDataRepositoryProvider)
-                                    .addToMyAyahs(ayah.surah, ayah.ayah);
-                                context.go('/my-ayahs');
+                              onPressed: () async {
+                                // Use the provider's add method which updates state automatically
+                                await ref
+                                    .read(myAyahsProvider.notifier)
+                                    .addAyah(ayah.surah, ayah.ayah);
+                                if (context.mounted) {
+                                  context.go('/my-ayahs');
+                                }
                               },
                             ),
                           ],
