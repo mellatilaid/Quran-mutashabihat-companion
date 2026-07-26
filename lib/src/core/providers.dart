@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_mutashibihat_app/src/core/models.dart';
+import 'package:quran_mutashibihat_app/src/core/models/user_data_models.dart';
 import 'package:quran_mutashibihat_app/src/core/services/mutashabihat_repository.dart';
+import 'package:quran_mutashibihat_app/src/core/services/user_data_database_helper.dart';
+import 'package:quran_mutashibihat_app/src/core/services/user_data_repository.dart';
 
 /// Single shared repository instance for the whole app.
 final mutashabihatRepositoryProvider = Provider<MutashabihatRepository>((ref) {
@@ -110,3 +113,41 @@ class _FontSizeNotifier extends Notifier<double> {
 final arabicFontSizeProvider = NotifierProvider<_FontSizeNotifier, double>(
   _FontSizeNotifier.new,
 );
+
+// ============ User Data Providers (Favorites, Bookmarks) ============
+
+/// User data repository provider
+final userDataRepositoryProvider = Provider<UserDataRepository>((ref) {
+  final databaseHelper = UserDataDatabaseHelper();
+  return UserDataRepository(databaseHelper: databaseHelper);
+});
+
+/// All favorite ayahs
+final favoritesProvider = FutureProvider<List<FavoriteAyah>>((ref) {
+  final repo = ref.watch(userDataRepositoryProvider);
+  return repo.getFavorites();
+});
+
+/// Check if a specific ayah is favorited
+/// Usage: ref.watch(isFavoriteProvider((2, 112)))
+final isFavoriteProvider =
+    FutureProvider.family<bool, (int, int)>((ref, params) async {
+  final (surahId, ayahNum) = params;
+  final repo = ref.watch(userDataRepositoryProvider);
+  return repo.isFavorite(surahId, ayahNum);
+});
+
+/// Total count of favorite ayahs
+final favoriteCountProvider = FutureProvider<int>((ref) {
+  final repo = ref.watch(userDataRepositoryProvider);
+  return repo.getFavoriteCount();
+});
+
+/// Favorites for a specific surah
+/// Usage: ref.watch(favoritesBySurahProvider(2))
+final favoritesBySurahProvider =
+    FutureProvider.family<List<FavoriteAyah>, int>((ref, surahId) {
+      final repo = ref.watch(userDataRepositoryProvider);
+      return repo.getFavoritesBySurah(surahId);
+    });
+
