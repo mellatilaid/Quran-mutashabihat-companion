@@ -4,21 +4,30 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/providers.dart';
 
-/// Screen 1: Surah Index - Lists all 114 surahs with Mutashabihat ayah counts.
-class IndexScreen extends ConsumerWidget {
-  const IndexScreen({super.key});
+/// Screen 2: Mutashabihat Ayahs - Lists ayahs in a surah that contain shared phrases.
+class MutashabihatAyahsScreen extends ConsumerWidget {
+  final int surahId;
+
+  const MutashabihatAyahsScreen({
+    super.key,
+    required this.surahId,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final surahsAsync = ref.watch(surahsProvider);
+    final ayahsAsync = ref.watch(mutashabihatAyahsProvider(surahId));
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => context.go('/'),
+        ),
         title: Text(
-          'Mutashabihat',
+          'Surah $surahId',
           style: GoogleFonts.newsreader(
-            fontSize: 20,
+            fontSize: 18,
             fontWeight: FontWeight.w600,
             color: Colors.white,
           ),
@@ -26,64 +35,45 @@ class IndexScreen extends ConsumerWidget {
         elevation: 0,
         backgroundColor: const Color(0xFF1B5E20),
       ),
-      body: surahsAsync.when(
+      body: ayahsAsync.when(
         loading: () => const Center(
           child: CircularProgressIndicator(),
         ),
         error: (err, stack) => Center(
-          child: Text(
-            'Error: $err',
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
+          child: Text('Error: $err'),
         ),
-        data: (surahs) => ListView.builder(
+        data: (ayahs) => ListView.builder(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-          itemCount: surahs.length,
+          itemCount: ayahs.length,
           itemBuilder: (context, index) {
-            final surah = surahs[index];
+            final ayah = ayahs[index];
             return Card(
               margin: const EdgeInsets.symmetric(vertical: 6),
               child: ListTile(
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 16,
-                  vertical: 8,
+                  vertical: 12,
                 ),
                 title: Text(
-                  surah.nameArabic,
+                  ayah.text,
                   style: GoogleFonts.amiri(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
                     color: isDark ? const Color(0xFFEDEDE4) : const Color(0xFF20302C),
                   ),
                   textDirection: TextDirection.rtl,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 subtitle: Text(
-                  '${surah.versesCount} verses • ${surah.mutashabihatAyahCount} mutashabihat',
+                  'Ayah ${ayah.ayah}',
                   style: GoogleFonts.inter(
                     fontSize: 12,
                     color: isDark ? const Color(0xFFA29F96) : const Color(0xFF5C6B67),
                   ),
                 ),
-                trailing: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF0F6B62).withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Text(
-                    surah.nameSimple,
-                    style: GoogleFonts.inter(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF0F6B62),
-                    ),
-                  ),
-                ),
                 onTap: () {
-                  context.go('/surah/${surah.id}');
+                  context.go('/surah/$surahId/ayah/$surahId/${ayah.ayah}');
                 },
               ),
             );
@@ -93,4 +83,3 @@ class IndexScreen extends ConsumerWidget {
     );
   }
 }
-

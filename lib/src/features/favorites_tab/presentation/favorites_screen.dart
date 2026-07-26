@@ -14,10 +14,7 @@ class FavoritesScreen extends StatelessWidget {
         elevation: 0,
       ),
       body: const Center(
-        child: Text(
-          'Favorites Screen',
-          style: TextStyle(fontSize: 18),
-        ),
+        child: Text('Favorites Screen', style: TextStyle(fontSize: 18)),
       ),
     );
   }

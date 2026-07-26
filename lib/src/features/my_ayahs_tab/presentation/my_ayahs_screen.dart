@@ -14,10 +14,7 @@ class MyAyahsScreen extends StatelessWidget {
         elevation: 0,
       ),
       body: const Center(
-        child: Text(
-          'My Ayahs Screen',
-          style: TextStyle(fontSize: 18),
-        ),
+        child: Text('My Ayahs Screen', style: TextStyle(fontSize: 18)),
       ),
     );
   }
