@@ -12,11 +12,11 @@ class PillBadge extends StatelessWidget {
   final PillBadgeTone tone;
 
   const PillBadge({
-    Key? key,
+    super.key,
     required this.label,
     required this.color,
     this.tone = PillBadgeTone.solid,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -60,4 +60,3 @@ class PillBadge extends StatelessWidget {
     );
   }
 }
-

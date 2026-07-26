@@ -11,14 +11,14 @@ class AudioPlayButton extends StatefulWidget {
   final bool isPlaying;
 
   const AudioPlayButton({
-    Key? key,
+    super.key,
     this.onPlayPressed,
     this.onPausePressed,
     this.onProgressChanged,
     this.totalDuration = const Duration(minutes: 5),
     this.currentPosition = const Duration(seconds: 0),
     this.isPlaying = false,
-  }) : super(key: key);
+  });
 
   @override
   State<AudioPlayButton> createState() => _AudioPlayButtonState();
@@ -44,25 +44,28 @@ class _AudioPlayButtonState extends State<AudioPlayButton> {
   void _updateSliderValue() {
     _sliderValue = widget.totalDuration.inMilliseconds > 0
         ? widget.currentPosition.inMilliseconds.toDouble() /
-            widget.totalDuration.inMilliseconds.toDouble()
+              widget.totalDuration.inMilliseconds.toDouble()
         : 0.0;
   }
 
   void _onSliderChanged(double value) {
-    final newPosition =
-        Duration(milliseconds: (value * widget.totalDuration.inMilliseconds).toInt());
+    final newPosition = Duration(
+      milliseconds: (value * widget.totalDuration.inMilliseconds).toInt(),
+    );
     widget.onProgressChanged?.call(newPosition);
   }
 
   void _incrementProgress() {
-    final newPosition = widget.currentPosition + const Duration(milliseconds: 100);
+    final newPosition =
+        widget.currentPosition + const Duration(milliseconds: 100);
     if (newPosition <= widget.totalDuration) {
       widget.onProgressChanged?.call(newPosition);
     }
   }
 
   void _decrementProgress() {
-    final newPosition = widget.currentPosition - const Duration(milliseconds: 100);
+    final newPosition =
+        widget.currentPosition - const Duration(milliseconds: 100);
     if (newPosition >= Duration.zero) {
       widget.onProgressChanged?.call(newPosition);
     }

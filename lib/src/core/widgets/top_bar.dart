@@ -12,14 +12,14 @@ class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
   final Color? foregroundColor;
 
   const AppTopBar({
-    Key? key,
+    super.key,
     this.title,
     this.onBackPressed,
     this.trailingAction,
     this.showBack = true,
     this.backgroundColor,
     this.foregroundColor,
-  }) : super(key: key);
+  });
 
   @override
   Size get preferredSize => const Size.fromHeight(56);
@@ -28,7 +28,8 @@ class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor =
-        backgroundColor ?? (isDark ? const Color(0xFF1B5E20) : const Color(0xFF1B5E20));
+        backgroundColor ??
+        (isDark ? const Color(0xFF1B5E20) : const Color(0xFF1B5E20));
     final fgColor = foregroundColor ?? Colors.white;
 
     return AppBar(

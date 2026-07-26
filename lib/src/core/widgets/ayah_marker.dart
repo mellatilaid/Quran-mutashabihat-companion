@@ -6,15 +6,16 @@ import 'package:google_fonts/google_fonts.dart';
 class AyahMarker extends StatelessWidget {
   final int ayahNumber;
 
-  const AyahMarker({
-    Key? key,
-    required this.ayahNumber,
-  }) : super(key: key);
+  const AyahMarker({super.key, required this.ayahNumber});
 
   /// Convert Western numeral to Arabic-Indic numeral.
   String _toArabicIndic(int number) {
     const arabicIndic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-    return number.toString().split('').map((digit) => arabicIndic[int.parse(digit)]).join();
+    return number
+        .toString()
+        .split('')
+        .map((digit) => arabicIndic[int.parse(digit)])
+        .join();
   }
 
   @override

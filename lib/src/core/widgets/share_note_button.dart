@@ -9,11 +9,11 @@ class ShareNoteButton extends StatefulWidget {
   final String label;
 
   const ShareNoteButton({
-    Key? key,
+    super.key,
     required this.textToCopy,
     this.onCopied,
     this.label = 'Share',
-  }) : super(key: key);
+  });
 
   @override
   State<ShareNoteButton> createState() => _ShareNoteButtonState();
@@ -24,16 +24,16 @@ class _ShareNoteButtonState extends State<ShareNoteButton> {
 
   Future<void> _copyToClipboard() async {
     await Clipboard.setData(ClipboardData(text: widget.textToCopy));
-    
+
     setState(() {
       _isCopied = true;
     });
-    
+
     widget.onCopied?.call();
-    
+
     // Reset after 1.5 seconds
     await Future.delayed(const Duration(milliseconds: 1500));
-    
+
     if (mounted) {
       setState(() {
         _isCopied = false;
@@ -68,9 +68,9 @@ class _ShareNoteButtonState extends State<ShareNoteButton> {
               const SizedBox(width: 6),
               Text(
                 _isCopied ? 'Copied' : widget.label,
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: Colors.white,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.labelSmall?.copyWith(color: Colors.white),
               ),
             ],
           ),

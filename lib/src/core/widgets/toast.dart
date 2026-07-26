@@ -10,18 +10,19 @@ class AppToast extends StatefulWidget {
   final VoidCallback? onDismiss;
 
   const AppToast({
-    Key? key,
+    super.key,
     required this.message,
     this.onUndo,
     this.duration = const Duration(seconds: 4),
     this.onDismiss,
-  }) : super(key: key);
+  });
 
   @override
   State<AppToast> createState() => _AppToastState();
 }
 
-class _AppToastState extends State<AppToast> with SingleTickerProviderStateMixin {
+class _AppToastState extends State<AppToast>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
 
@@ -33,10 +34,10 @@ class _AppToastState extends State<AppToast> with SingleTickerProviderStateMixin
       vsync: this,
     );
 
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 1),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeOut));
+    _slideAnimation = Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero)
+        .animate(
+          CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
+        );
 
     _animationController.forward();
 
@@ -58,7 +59,9 @@ class _AppToastState extends State<AppToast> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgColor = isDark ? const Color(0xFF2D3F3A) : const Color(0xFF0F6B62); // dark teal
+    final bgColor = isDark
+        ? const Color(0xFF2D3F3A)
+        : const Color(0xFF0F6B62); // dark teal
     final fgColor = Colors.white;
 
     return SlideTransition(

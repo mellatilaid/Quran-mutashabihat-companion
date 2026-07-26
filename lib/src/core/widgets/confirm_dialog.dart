@@ -14,7 +14,7 @@ class ConfirmDialog extends StatelessWidget {
   final bool isDangerous;
 
   const ConfirmDialog({
-    Key? key,
+    super.key,
     required this.title,
     required this.message,
     required this.onConfirm,
@@ -23,7 +23,7 @@ class ConfirmDialog extends StatelessWidget {
     this.onCancel,
     this.confirmColor,
     this.isDangerous = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
