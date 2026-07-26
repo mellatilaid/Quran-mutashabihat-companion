@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import '../../../core/providers.dart';
 import '../../../core/widgets/arabic_line.dart';
 
@@ -9,10 +10,7 @@ import '../../../core/widgets/arabic_line.dart';
 class PhraseComparisonScreen extends ConsumerWidget {
   final int phraseId;
 
-  const PhraseComparisonScreen({
-    super.key,
-    required this.phraseId,
-  });
+  const PhraseComparisonScreen({super.key, required this.phraseId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -52,10 +50,14 @@ class PhraseComparisonScreen extends ConsumerWidget {
             data: (phrase) => Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: isDark ? const Color(0xFF1B2422) : const Color(0xFFFAFAFA),
+                color: isDark
+                    ? const Color(0xFF1B2422)
+                    : const Color(0xFFFAFAFA),
                 border: Border(
                   bottom: BorderSide(
-                    color: isDark ? const Color(0xFF3A3428) : const Color(0xFFE2DAC7),
+                    color: isDark
+                        ? const Color(0xFF3A3428)
+                        : const Color(0xFFE2DAC7),
                     width: 1,
                   ),
                 ),
@@ -68,7 +70,9 @@ class PhraseComparisonScreen extends ConsumerWidget {
                     style: GoogleFonts.inter(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: isDark ? const Color(0xFFA29F96) : const Color(0xFF5C6B67),
+                      color: isDark
+                          ? const Color(0xFFA29F96)
+                          : const Color(0xFF5C6B67),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -87,7 +91,9 @@ class PhraseComparisonScreen extends ConsumerWidget {
                         'in ${phrase.surahCount} surahs, ${phrase.ayahCount} ayahs',
                         style: GoogleFonts.inter(
                           fontSize: 12,
-                          color: isDark ? const Color(0xFFA29F96) : const Color(0xFF5C6B67),
+                          color: isDark
+                              ? const Color(0xFFA29F96)
+                              : const Color(0xFF5C6B67),
                         ),
                       ),
                     ],
@@ -99,14 +105,13 @@ class PhraseComparisonScreen extends ConsumerWidget {
           // List of occurrences
           Expanded(
             child: comparisonAsync.when(
-              loading: () => const Center(
-                child: CircularProgressIndicator(),
-              ),
-              error: (err, _) => Center(
-                child: Text('Error: $err'),
-              ),
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (err, _) => Center(child: Text('Error: $err')),
               data: (occurrences) => ListView.builder(
-                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 12,
+                ),
                 itemCount: occurrences.length,
                 itemBuilder: (context, index) {
                   final occurrence = occurrences[index];
@@ -134,10 +139,7 @@ class PhraseComparisonScreen extends ConsumerWidget {
                             ),
                             const SizedBox(height: 8),
                             // Words with highlight
-                            ArabicLine(
-                              words: occurrence.words,
-                              fontSize: 16,
-                            ),
+                            ArabicLine(words: occurrence.words, fontSize: 16),
                           ],
                         ),
                       ),

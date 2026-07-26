@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import '../../../core/providers.dart';
 
 /// Screen 1: Surah Index - Lists all 114 surahs with Mutashabihat ayah counts.
@@ -27,9 +28,7 @@ class IndexScreen extends ConsumerWidget {
         backgroundColor: const Color(0xFF1B5E20),
       ),
       body: surahsAsync.when(
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
+        loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(
           child: Text(
             'Error: $err',
@@ -53,7 +52,9 @@ class IndexScreen extends ConsumerWidget {
                   style: GoogleFonts.amiri(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: isDark ? const Color(0xFFEDEDE4) : const Color(0xFF20302C),
+                    color: isDark
+                        ? const Color(0xFFEDEDE4)
+                        : const Color(0xFF20302C),
                   ),
                   textDirection: TextDirection.rtl,
                 ),
@@ -61,7 +62,9 @@ class IndexScreen extends ConsumerWidget {
                   '${surah.versesCount} verses • ${surah.mutashabihatAyahCount} mutashabihat',
                   style: GoogleFonts.inter(
                     fontSize: 12,
-                    color: isDark ? const Color(0xFFA29F96) : const Color(0xFF5C6B67),
+                    color: isDark
+                        ? const Color(0xFFA29F96)
+                        : const Color(0xFF5C6B67),
                   ),
                 ),
                 trailing: Container(
@@ -93,4 +96,3 @@ class IndexScreen extends ConsumerWidget {
     );
   }
 }
-

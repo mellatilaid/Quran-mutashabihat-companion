@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import '../../../core/providers.dart';
 
 /// Screen 2: Mutashabihat Ayahs - Lists ayahs in a surah that contain shared phrases.
 class MutashabihatAyahsScreen extends ConsumerWidget {
   final int surahId;
 
-  const MutashabihatAyahsScreen({
-    super.key,
-    required this.surahId,
-  });
+  const MutashabihatAyahsScreen({super.key, required this.surahId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,12 +34,8 @@ class MutashabihatAyahsScreen extends ConsumerWidget {
         backgroundColor: const Color(0xFF1B5E20),
       ),
       body: ayahsAsync.when(
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
-        error: (err, stack) => Center(
-          child: Text('Error: $err'),
-        ),
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (err, stack) => Center(child: Text('Error: $err')),
         data: (ayahs) => ListView.builder(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
           itemCount: ayahs.length,
@@ -59,7 +53,9 @@ class MutashabihatAyahsScreen extends ConsumerWidget {
                   style: GoogleFonts.amiri(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
-                    color: isDark ? const Color(0xFFEDEDE4) : const Color(0xFF20302C),
+                    color: isDark
+                        ? const Color(0xFFEDEDE4)
+                        : const Color(0xFF20302C),
                   ),
                   textDirection: TextDirection.rtl,
                   maxLines: 2,
@@ -69,7 +65,9 @@ class MutashabihatAyahsScreen extends ConsumerWidget {
                   'Ayah ${ayah.ayah}',
                   style: GoogleFonts.inter(
                     fontSize: 12,
-                    color: isDark ? const Color(0xFFA29F96) : const Color(0xFF5C6B67),
+                    color: isDark
+                        ? const Color(0xFFA29F96)
+                        : const Color(0xFF5C6B67),
                   ),
                 ),
                 onTap: () {

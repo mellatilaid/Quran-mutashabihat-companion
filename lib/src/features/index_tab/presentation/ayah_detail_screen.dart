@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import '../../../core/providers.dart';
 import '../../../core/widgets/arabic_line.dart';
 import '../../../core/widgets/pill_badge.dart';
@@ -48,12 +49,8 @@ class _AyahDetailScreenState extends ConsumerState<AyahDetailScreen> {
         backgroundColor: const Color(0xFF1B5E20),
       ),
       body: ayahAsync.when(
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
-        error: (err, stack) => Center(
-          child: Text('Error: $err'),
-        ),
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (err, stack) => Center(child: Text('Error: $err')),
         data: (ayah) => SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -63,10 +60,14 @@ class _AyahDetailScreenState extends ConsumerState<AyahDetailScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: isDark ? const Color(0xFF1B2422) : const Color(0xFFFBF7EF),
+                  color: isDark
+                      ? const Color(0xFF1B2422)
+                      : const Color(0xFFFBF7EF),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: isDark ? const Color(0xFF3A3428) : const Color(0xFFE2DAC7),
+                    color: isDark
+                        ? const Color(0xFF3A3428)
+                        : const Color(0xFFE2DAC7),
                   ),
                 ),
                 child: ArabicLine(
@@ -88,7 +89,9 @@ class _AyahDetailScreenState extends ConsumerState<AyahDetailScreen> {
                       style: GoogleFonts.newsreader(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: isDark ? const Color(0xFFEDEDE4) : const Color(0xFF20302C),
+                        color: isDark
+                            ? const Color(0xFFEDEDE4)
+                            : const Color(0xFF20302C),
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -108,7 +111,9 @@ class _AyahDetailScreenState extends ConsumerState<AyahDetailScreen> {
                             color: isSelected
                                 ? const Color(0xFF0F6B62)
                                 : const Color(0xFF0F6B62),
-                            tone: isSelected ? PillBadgeTone.solid : PillBadgeTone.soft,
+                            tone: isSelected
+                                ? PillBadgeTone.solid
+                                : PillBadgeTone.soft,
                           ),
                         );
                       }).toList(),
