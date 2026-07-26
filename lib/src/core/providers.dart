@@ -1,0 +1,112 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quran_mutashibihat_app/src/core/models.dart';
+import 'package:quran_mutashibihat_app/src/core/services/mutashabihat_repository.dart';
+
+/// Single shared repository instance for the whole app.
+final mutashabihatRepositoryProvider = Provider<MutashabihatRepository>((ref) {
+  return MutashabihatRepository();
+});
+
+/// Screen 1 — Surah Index.
+final surahsProvider = FutureProvider<List<Surah>>((ref) {
+  final repo = ref.watch(mutashabihatRepositoryProvider);
+  return repo.getSurahs();
+});
+
+/// Screen 2 — Mutashabihat ayahs for a given surah id.
+/// Usage: ref.watch(mutashabihatAyahsProvider(2)) for Surat Al-Baqarah.
+final mutashabihatAyahsProvider =
+    FutureProvider.family<List<AyahListItem>, int>((ref, surah) {
+      final repo = ref.watch(mutashabihatRepositoryProvider);
+      return repo.getMutashabihatAyahs(surah);
+    });
+
+/// Identifies a single ayah — used as the .family argument for Screen 3
+/// since a provider family key needs to be a single hashable value.
+class AyahKey {
+  final int surah;
+  final int ayah;
+  const AyahKey(this.surah, this.ayah);
+
+  @override
+  bool operator ==(Object other) =>
+      other is AyahKey && other.surah == surah && other.ayah == ayah;
+
+  @override
+  int get hashCode => Object.hash(surah, ayah);
+}
+
+/// Screen 3 — full detail (words + highlights) for one tapped ayah.
+/// Usage: ref.watch(ayahDetailProvider(AyahKey(2, 112)))
+final ayahDetailProvider = FutureProvider.family<AyahDetail, AyahKey>((
+  ref,
+  key,
+) {
+  final repo = ref.watch(mutashabihatRepositoryProvider);
+  return repo.getAyahDetail(key.surah, key.ayah);
+});
+
+/// Screen 4 — phrase metadata header.
+/// Usage: ref.watch(phraseProvider(988))
+final phraseProvider = FutureProvider.family<Phrase, int>((ref, phraseId) {
+  final repo = ref.watch(mutashabihatRepositoryProvider);
+  return repo.getPhrase(phraseId);
+});
+
+/// Screen 4 — every occurrence of the selected phrase, each ready to render
+/// with its own highlighted words.
+/// Usage: ref.watch(phraseComparisonProvider(988))
+final phraseComparisonProvider =
+    FutureProvider.family<List<PhraseOccurrenceDetail>, int>((ref, phraseId) {
+      final repo = ref.watch(mutashabihatRepositoryProvider);
+      return repo.getPhraseComparison(phraseId);
+    });
+
+/// Theme mode provider for light/dark mode switching
+/// This is a simple notifier provider that manages the app's theme mode.
+class _ThemeModeNotifier extends Notifier<ThemeMode> {
+  @override
+  ThemeMode build() => ThemeMode.light;
+
+  void toggle() {
+    state = state == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+  }
+
+  void setThemeMode(ThemeMode mode) {
+    state = mode;
+  }
+}
+
+final themeModeProvider = NotifierProvider<_ThemeModeNotifier, ThemeMode>(
+  _ThemeModeNotifier.new,
+);
+
+/// Arabic font size provider (17.0, 20.0, 22.0)
+/// This manages the app-wide Arabic text size setting.
+class _FontSizeNotifier extends Notifier<double> {
+  @override
+  double build() => 20.0;
+
+  void setFontSize(double size) {
+    if ([17.0, 20.0, 22.0].contains(size)) {
+      state = size;
+    }
+  }
+
+  void increase() {
+    if (state < 22.0) {
+      state += 3.0;
+    }
+  }
+
+  void decrease() {
+    if (state > 17.0) {
+      state -= 3.0;
+    }
+  }
+}
+
+final arabicFontSizeProvider = NotifierProvider<_FontSizeNotifier, double>(
+  _FontSizeNotifier.new,
+);
