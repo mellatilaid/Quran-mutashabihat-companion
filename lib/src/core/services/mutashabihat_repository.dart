@@ -168,4 +168,45 @@ class MutashabihatRepository {
     }
     return results;
   }
+
+  // --------- Search Ayahs (for My Ayahs Add Screen) ---------
+
+  /// Search ayahs by text or surah:ayah reference
+  /// Returns AyahListItem results limited to 50
+  Future<List<AyahListItem>> searchAyahs(String query) async {
+    if (query.isEmpty) return [];
+
+    final db = await _db;
+
+    // First try to parse as "surah:ayah" format
+    if (query.contains(':')) {
+      final parts = query.split(':');
+      if (parts.length == 2) {
+        final surahParsed = int.tryParse(parts[0].trim());
+        final ayahParsed = int.tryParse(parts[1].trim());
+        if (surahParsed != null && ayahParsed != null) {
+          final rows = await db.query(
+            'ayahs',
+            where: 'surah = ? AND ayah = ?',
+            whereArgs: [surahParsed, ayahParsed],
+            limit: 1,
+          );
+          if (rows.isNotEmpty) {
+            return [AyahListItem.fromMap(rows.first)];
+          }
+          return [];
+        }
+      }
+    }
+
+    // Otherwise search by Arabic text (case-insensitive substring match)
+    final rows = await db.query(
+      'ayahs',
+      where: 'text LIKE ?',
+      whereArgs: ['%$query%'],
+      limit: 50,
+      orderBy: 'surah ASC, ayah ASC',
+    );
+    return rows.map(AyahListItem.fromMap).toList();
+  }
 }

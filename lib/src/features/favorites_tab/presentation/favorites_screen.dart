@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import '../../../core/providers.dart';
 
 /// Favorites Tab Screen - displays user's favorite Ayahs.
@@ -27,12 +28,8 @@ class FavoritesScreen extends ConsumerWidget {
         backgroundColor: const Color(0xFF1B5E20),
       ),
       body: favoritesAsync.when(
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
-        error: (err, stack) => Center(
-          child: Text('Error: $err'),
-        ),
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (err, stack) => Center(child: Text('Error: $err')),
         data: (favorites) {
           if (favorites.isEmpty) {
             return Center(
@@ -42,7 +39,9 @@ class FavoritesScreen extends ConsumerWidget {
                   Icon(
                     Icons.favorite_border,
                     size: 64,
-                    color: isDark ? const Color(0xFFA29F96) : const Color(0xFF5C6B67),
+                    color: isDark
+                        ? const Color(0xFFA29F96)
+                        : const Color(0xFF5C6B67),
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -50,7 +49,9 @@ class FavoritesScreen extends ConsumerWidget {
                     style: GoogleFonts.newsreader(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: isDark ? const Color(0xFFEDEDE4) : const Color(0xFF20302C),
+                      color: isDark
+                          ? const Color(0xFFEDEDE4)
+                          : const Color(0xFF20302C),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -58,7 +59,9 @@ class FavoritesScreen extends ConsumerWidget {
                     'Add your favorite ayahs from the Index tab',
                     style: GoogleFonts.inter(
                       fontSize: 14,
-                      color: isDark ? const Color(0xFFA29F96) : const Color(0xFF5C6B67),
+                      color: isDark
+                          ? const Color(0xFFA29F96)
+                          : const Color(0xFF5C6B67),
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -88,7 +91,9 @@ class FavoritesScreen extends ConsumerWidget {
                     style: GoogleFonts.newsreader(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: isDark ? const Color(0xFFEDEDE4) : const Color(0xFF20302C),
+                      color: isDark
+                          ? const Color(0xFFEDEDE4)
+                          : const Color(0xFF20302C),
                     ),
                   ),
                   subtitle: favorite.note != null
@@ -96,7 +101,9 @@ class FavoritesScreen extends ConsumerWidget {
                           favorite.note!,
                           style: GoogleFonts.inter(
                             fontSize: 12,
-                            color: isDark ? const Color(0xFFA29F96) : const Color(0xFF5C6B67),
+                            color: isDark
+                                ? const Color(0xFFA29F96)
+                                : const Color(0xFF5C6B67),
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -105,7 +112,9 @@ class FavoritesScreen extends ConsumerWidget {
                           'Added ${favorite.addedAt.toString().split(' ')[0]}',
                           style: GoogleFonts.inter(
                             fontSize: 12,
-                            color: isDark ? const Color(0xFFA29F96) : const Color(0xFF5C6B67),
+                            color: isDark
+                                ? const Color(0xFFA29F96)
+                                : const Color(0xFF5C6B67),
                           ),
                         ),
                   onTap: () {
@@ -141,4 +150,3 @@ class FavoritesScreen extends ConsumerWidget {
     );
   }
 }
-

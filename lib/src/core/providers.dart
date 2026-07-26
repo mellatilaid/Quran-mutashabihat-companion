@@ -130,8 +130,10 @@ final favoritesProvider = FutureProvider<List<FavoriteAyah>>((ref) {
 
 /// Check if a specific ayah is favorited
 /// Usage: ref.watch(isFavoriteProvider((2, 112)))
-final isFavoriteProvider =
-    FutureProvider.family<bool, (int, int)>((ref, params) async {
+final isFavoriteProvider = FutureProvider.family<bool, (int, int)>((
+  ref,
+  params,
+) async {
   final (surahId, ayahNum) = params;
   final repo = ref.watch(userDataRepositoryProvider);
   return repo.isFavorite(surahId, ayahNum);
@@ -145,9 +147,54 @@ final favoriteCountProvider = FutureProvider<int>((ref) {
 
 /// Favorites for a specific surah
 /// Usage: ref.watch(favoritesBySurahProvider(2))
-final favoritesBySurahProvider =
-    FutureProvider.family<List<FavoriteAyah>, int>((ref, surahId) {
-      final repo = ref.watch(userDataRepositoryProvider);
-      return repo.getFavoritesBySurah(surahId);
-    });
+final favoritesBySurahProvider = FutureProvider.family<List<FavoriteAyah>, int>(
+  (ref, surahId) {
+    final repo = ref.watch(userDataRepositoryProvider);
+    return repo.getFavoritesBySurah(surahId);
+  },
+);
+
+// ============ My Ayahs Providers ============
+
+/// All bookmarked (difficult) ayahs
+final myAyahsProvider = FutureProvider<List<MyAyahListItem>>((ref) {
+  final repo = ref.watch(userDataRepositoryProvider);
+  return repo.getMyAyahs();
+});
+
+/// Check if a specific ayah is bookmarked
+/// Usage: ref.watch(isInMyAyahsProvider((2, 112)))
+final isInMyAyahsProvider = FutureProvider.family<bool, (int, int)>((
+  ref,
+  params,
+) async {
+  final (surahId, ayahNum) = params;
+  final repo = ref.watch(userDataRepositoryProvider);
+  return repo.isInMyAyahs(surahId, ayahNum);
+});
+
+/// Total count of bookmarked ayahs
+final myAyahsCountProvider = FutureProvider<int>((ref) {
+  final repo = ref.watch(userDataRepositoryProvider);
+  return repo.getMyAyahsCount();
+});
+
+/// My Ayahs for a specific surah
+/// Usage: ref.watch(myAyahsBySurahProvider(2))
+final myAyahsBySurahProvider =
+    FutureProvider.family<List<MyAyahListItem>, int>(
+  (ref, surahId) {
+    final repo = ref.watch(userDataRepositoryProvider);
+    return repo.getMyAyahsBySurah(surahId);
+  },
+);
+
+/// Search ayahs by query
+/// Usage: ref.watch(searchAyahsProvider("محمد"))
+final searchAyahsProvider = FutureProvider.family<List<AyahListItem>, String>(
+  (ref, query) {
+    final mutashabihatRepo = ref.watch(mutashabihatRepositoryProvider);
+    return mutashabihatRepo.searchAyahs(query);
+  },
+);
 

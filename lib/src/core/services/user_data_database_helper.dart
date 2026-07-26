@@ -1,6 +1,6 @@
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
 
 /// Manages the writable user_data.db database for user-generated content.
 /// Separate from the read-only app.db to allow data modifications.
@@ -29,11 +29,7 @@ class UserDataDatabaseHelper {
     final documentsDir = await getApplicationDocumentsDirectory();
     final path = join(documentsDir.path, _dbName);
 
-    return openDatabase(
-      path,
-      version: _dbVersion,
-      onCreate: _onCreate,
-    );
+    return openDatabase(path, version: _dbVersion, onCreate: _onCreate);
   }
 
   Future<void> _onCreate(Database db, int version) async {
@@ -52,6 +48,23 @@ class UserDataDatabaseHelper {
     // Create index on surah_id for faster queries
     await db.execute('''
       CREATE INDEX IF NOT EXISTS idx_favorites_surah_id ON favorites(surah_id)
+    ''');
+
+    // Create my_ayahs table for bookmarked difficult ayahs
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS my_ayahs (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        surah_id INTEGER NOT NULL,
+        ayah_num INTEGER NOT NULL,
+        note TEXT,
+        created_at TEXT NOT NULL,
+        UNIQUE(surah_id, ayah_num)
+      )
+    ''');
+
+    // Create index on surah_id for my_ayahs
+    await db.execute('''
+      CREATE INDEX IF NOT EXISTS idx_my_ayahs_surah_id ON my_ayahs(surah_id)
     ''');
   }
 
