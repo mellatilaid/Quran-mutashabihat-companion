@@ -1,0 +1,118 @@
+{
+  "@@locale": "ar",
+  "appTitle": "رفيق المتشابهات",
+  "appDescription": "تطبيق لاستكشاف الآيات المتشابهة في القرآن الكريم",
+  "indexTabLabel": "الفهرس",
+  "favoritesTabLabel": "المفضلة",
+  "myAyahsTabLabel": "آياتي",
+  "profileTabLabel": "الملف",
+  "mutashabihatCompanion": "رفيق المتشابهات",
+  "verses": "الآيات",
+  "mutashabihat": "المتشابهات",
+  "surahListTitle": "قائمة السور",
+  "mostConfusable": "الأكثر التباساً",
+  "searchPlaceholder": "ابحث عن سورة",
+  "ayahMarkerLabel": "آية",
+  "similarPhrasesFound": "عبارات متشابهة موجودة هنا",
+  "tapColoredDot": "اضغط على النقطة الملونة لعزل تلك العبارة في الآية أعلاه",
+  "comparePhrase": "مقارنة العبارة",
+  "mnemonicSection": "نصيحة ذاكرة",
+  "myNoteSection": "ملاحظتي",
+  "addYourMnemonic": "أضف ذاكرة خاصة بك",
+  "favorites": "المفضلة",
+  "noFavoritesYet": "لا توجد مفضلة حتى الآن",
+  "addFavoritesFromIndexTab": "أضف آياتك المفضلة من علامة الفهرس",
+  "myAyahs": "آياتي",
+  "noAyahsBookmarked": "لم تقم بحفظ أي آيات حتى الآن",
+  "addDifficultAyahs": "أضف الآيات الصعبة التي تريد دراستها",
+  "addADifficultAyah": "أضف آية صعبة",
+  "searchForAyah": "ابحث عن آية (حرفين أو أكثر)",
+  "searchByTextOrReference": "ابحث حسب النص أو \"سورة:آية\"",
+  "noAyahsFound": "لم يتم العثور على آيات",
+  "addYourOwnMnemonic": "أضف ذاكرتك الخاصة...",
+  "whyIsThisHardToRecall": "لماذا من الصعب تذكر هذه الآية؟",
+  "profile": "الملف الشخصي",
+  "favoriteAyahs": "الآيات المفضلة",
+  "appearance": "المظهر",
+  "darkMode": "الوضع الليلي",
+  "arabicTextSize": "حجم النص العربي",
+  "confidenceBySurah": "الثقة حسب السورة",
+  "yourProgressByAyah": "سيظهر تقدمك حسب السورة هنا بعد إكمال جلسات الاختبار",
+  "progress": "التقدم",
+  "resetTestHistory": "إعادة تعيين سجل الاختبار",
+  "aboutThisApp": "حول هذا التطبيق",
+  "copyToClipboard": "نسخ إلى الحافظة",
+  "share": "مشاركة",
+  "copied": "تم النسخ",
+  "delete": "حذف",
+  "edit": "تعديل",
+  "save": "حفظ",
+  "cancel": "إلغاء",
+  "confirm": "تأكيد",
+  "close": "إغلاق",
+  "loading": "جاري التحميل",
+  "error": "خطأ",
+  "errorMessage": "خطأ: {error}",
+  "@errorMessage": {
+    "description": "Error display message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "sharedPhrases": "العبارات المتشابهة",
+  "phrase": "العبارة",
+  "comparePhrase": "مقارنة العبارة",
+  "occurrencesCount": "عدد المرات",
+  "location": "الموقع",
+  "noOccurrences": "لا توجد نتائج",
+  "exit": "خروج",
+  "exitTest": "الخروج من الاختبار؟",
+  "yourProgressWillBeLost": "سيتم فقدان تقدمك",
+  "questionOfTotal": "السؤال {number} من {total}",
+  "@questionOfTotal": {
+    "description": "Progress indicator for test",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "recallTheRest": "تذكر البقية",
+  "revealFullAyah": "الكشف عن الآية كاملة",
+  "didYouGetItRight": "هل حصلت على الإجابة الصحيحة؟",
+  "missedIt": "فاتتني",
+  "gotIt": "نجحت",
+  "testComplete": "اكتمل الاختبار",
+  "score": "النتيجة: {correct} من {total}",
+  "@score": {
+    "description": "Test score result",
+    "placeholders": {
+      "correct": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "scorePercentage": "{percent}%",
+  "@scorePercentage": {
+    "description": "Percentage score",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "greatJob": "أحسنت! استمر في الممارسة",
+  "goodEffort": "جهد جيد. أعد مراجعة هذه الآيات",
+  "keepStudying": "استمر في دراسة هذه الآيات الصعبة",
+  "done": "تم",
+  "emptyStateMessage": "ابدأ بإضافة محتوى",
+  "startTestMode": "ابدأ وضع الاختبار"
+}

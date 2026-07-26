@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
 
 import '../../../core/providers.dart';
 import '../../../core/widgets/arabic_line.dart';
@@ -25,7 +26,7 @@ class PhraseComparisonScreen extends ConsumerWidget {
           onPressed: () => context.pop(),
         ),
         title: Text(
-          'Phrase Occurrences',
+          AppLocalizations.of(context)!.comparePhrase,
           style: GoogleFonts.newsreader(
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -66,7 +67,7 @@ class PhraseComparisonScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Total Occurrences',
+                    AppLocalizations.of(context)!.occurrencesCount,
                     style: GoogleFonts.inter(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,

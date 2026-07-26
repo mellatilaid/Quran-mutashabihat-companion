@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
 import 'package:quran_mutashibihat_app/src/core/providers.dart';
 import 'package:quran_mutashibihat_app/src/core/router.dart';
 import 'package:quran_mutashibihat_app/src/core/theme/app_theme.dart';
@@ -18,8 +20,13 @@ class MutashabihatApp extends ConsumerWidget {
       darkTheme: darkTheme,
       themeMode: themeMode,
       routerConfig: router,
-      localizationsDelegates: const [],
-      supportedLocales: const [Locale('ar')],
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
 
 import '../../../core/providers.dart';
 
@@ -17,7 +18,7 @@ class MyAyahsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'My Ayahs',
+          AppLocalizations.of(context)!.myAyahs,
           style: GoogleFonts.newsreader(
             fontSize: 20,
             fontWeight: FontWeight.w600,
