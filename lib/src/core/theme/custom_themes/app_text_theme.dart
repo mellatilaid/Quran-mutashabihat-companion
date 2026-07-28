@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../constants/app_colors.dart';
 import '../../constants/design_tokens.dart';
 
-class STextThemeV2 {
-  STextThemeV2._();
+class AppTextTheme {
+  AppTextTheme._();
 
   /// Get text theme based on brightness
   static TextTheme getTextTheme(Brightness brightness) {
