@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
-import 'package:quran_mutashibihat_app/src/core/extensions/theme_extension.dart';
+import 'package:quran_mutashibihat_app/src/core/extensions/build_context_extensions.dart';
 
 import '../../../core/providers/providers.dart';
 
