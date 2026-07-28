@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
 import 'package:quran_mutashibihat_app/src/core/providers.dart';
 import 'package:quran_mutashibihat_app/src/core/router.dart';
-import 'package:quran_mutashibihat_app/src/core/theme/app_theme_v2.dart';
+import 'package:quran_mutashibihat_app/src/core/theme/app_theme.dart';
 
 class MutashabihatApp extends ConsumerWidget {
   const MutashabihatApp({super.key});
