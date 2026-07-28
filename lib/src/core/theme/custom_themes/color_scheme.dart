@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../constants/app_colors.dart';
 
-class SColorScheme {
-  SColorScheme._();
+class AppColorScheme {
+  AppColorScheme._();
 
   ///light color scheme for the app
   static ColorScheme lightColorScheme = ColorScheme.light(

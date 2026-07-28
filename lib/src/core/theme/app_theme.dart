@@ -16,8 +16,8 @@ class Apptheme {
     // Get colors based on brightness
     final backgroundColor = isDark ? AppColors.darkPaper : AppColors.lightPaper;
     final colorScheme = isDark
-        ? SColorScheme.darkColorScheme
-        : SColorScheme.lightColorScheme;
+        ? AppColorScheme.darkColorScheme
+        : AppColorScheme.lightColorScheme;
     final inputDecorationTheme = isDark
         ? SInputDecorationTheme.darkInputDecorationTheme
         : SInputDecorationTheme.lightInputDecorationTheme;
