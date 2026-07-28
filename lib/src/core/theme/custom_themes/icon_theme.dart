@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SIconTheme {
-  SIconTheme._();
+class AppIconTheme {
+  AppIconTheme._();
 
   static IconThemeData iconTheme = IconThemeData(
     size: 20,

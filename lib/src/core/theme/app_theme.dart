@@ -31,7 +31,7 @@ class Apptheme {
       colorScheme: colorScheme,
       textTheme: AppTextTheme.getTextTheme(brightness),
       inputDecorationTheme: inputDecorationTheme,
-      iconTheme: SIconTheme.iconTheme,
+      iconTheme: AppIconTheme.iconTheme,
       dividerColor: dividerColor,
     );
   }
