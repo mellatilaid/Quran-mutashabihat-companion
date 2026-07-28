@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
 
 import '../../../core/models.dart';
-import '../../../core/providers.dart';
+import '../../../core/providers/providers.dart';
 import '../../../core/widgets/widgets_index.dart';
 
 /// My Ayahs Test Screen — flashcard test mode for bookmarked ayahs.

@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
 
-import '../../../core/providers.dart';
+import '../../../core/providers/providers.dart';
 import '../../../core/widgets/arabic_line.dart';
 
 /// Screen 4: Phrase Comparison - Shows all Quran-wide occurrences of a phrase.

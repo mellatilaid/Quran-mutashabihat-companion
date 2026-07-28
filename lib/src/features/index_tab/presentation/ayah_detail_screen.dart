@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
 
-import '../../../core/providers.dart';
+import '../../../core/providers/providers.dart';
 import '../../../core/widgets/arabic_line.dart';
 import '../../../core/widgets/pill_badge.dart';
 
@@ -86,7 +86,7 @@ class _AyahDetailScreenState extends ConsumerState<AyahDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      AppLocalizations.of(context)!.sharedPhrases,
+                      AppLocalizations.of(context).sharedPhrases,
                       style: GoogleFonts.newsreader(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -108,7 +108,8 @@ class _AyahDetailScreenState extends ConsumerState<AyahDetailScreen> {
                             });
                           },
                           child: PillBadge(
-                            label: '${AppLocalizations.of(context)!.phrase} $phraseId',
+                            label:
+                                '${AppLocalizations.of(context).phrase} $phraseId',
                             color: isSelected
                                 ? const Color(0xFF0F6B62)
                                 : const Color(0xFF0F6B62),
@@ -129,7 +130,7 @@ class _AyahDetailScreenState extends ConsumerState<AyahDetailScreen> {
                           );
                         },
                         icon: const Icon(Icons.compare_arrows),
-                        label: Text(AppLocalizations.of(context)!.comparePhrase),
+                        label: Text(AppLocalizations.of(context).comparePhrase),
                       ),
                   ],
                 ),

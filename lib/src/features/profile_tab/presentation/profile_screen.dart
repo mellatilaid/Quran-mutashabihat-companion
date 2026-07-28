@@ -3,7 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
 
-import '../../../core/providers.dart';
+import '../../../core/providers/app_theme_provider.dart';
+import '../../../core/providers/providers.dart';
 
 /// Profile Tab Screen — settings, statistics, and app information.
 class ProfileScreen extends ConsumerWidget {

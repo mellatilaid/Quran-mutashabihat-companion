@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
 import 'package:quran_mutashibihat_app/src/core/extensions/theme_extension.dart';
 
-import '../../../core/providers.dart';
+import '../../../core/providers/providers.dart';
 
 /// Screen 1: Surah Index - Lists all 114 surahs with Mutashabihat ayah counts.
 class IndexScreen extends ConsumerWidget {
