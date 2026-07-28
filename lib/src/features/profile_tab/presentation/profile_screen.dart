@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
+import 'package:quran_mutashibihat_app/src/core/extensions/theme_extension.dart';
 
 import '../../../core/providers/app_theme_provider.dart';
 import '../../../core/providers/providers.dart';
@@ -20,7 +20,7 @@ class ProfileScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context).profile,
+          context.l10n.profile,
           style: GoogleFonts.newsreader(
             fontSize: 20,
             fontWeight: FontWeight.w600,
