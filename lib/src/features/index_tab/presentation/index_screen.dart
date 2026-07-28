@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
+import 'package:quran_mutashibihat_app/src/core/extensions/theme_extension.dart';
 
 import '../../../core/providers.dart';
 
@@ -13,7 +14,7 @@ class IndexScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final surahsAsync = ref.watch(surahsProvider);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = context.theme.brightness == Brightness.dark;
 
     return Scaffold(
       appBar: AppBar(
