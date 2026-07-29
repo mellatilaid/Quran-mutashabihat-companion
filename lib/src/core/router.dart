@@ -3,10 +3,10 @@ import 'package:go_router/go_router.dart';
 
 import '../core/widgets/bottom_nav_bar.dart';
 import '../features/favorites_tab/presentation/favorites_screen.dart';
-import '../features/index_tab/presentation/ayah_detail_screen.dart';
-import '../features/index_tab/presentation/index_screen.dart';
-import '../features/index_tab/presentation/mutashabihat_ayahs_screen.dart';
-import '../features/index_tab/presentation/phrase_comparison_screen.dart';
+import '../features/index_tab/presentation/views/ayah_detail_screen.dart';
+import '../features/index_tab/presentation/views/index_screen.dart';
+import '../features/index_tab/presentation/views/mutashabihat_ayahs_screen.dart';
+import '../features/index_tab/presentation/views/phrase_comparison_screen.dart';
 import '../features/my_ayahs_tab/presentation/my_ayahs_add_screen.dart';
 import '../features/my_ayahs_tab/presentation/my_ayahs_detail_screen.dart';
 import '../features/my_ayahs_tab/presentation/my_ayahs_screen.dart';

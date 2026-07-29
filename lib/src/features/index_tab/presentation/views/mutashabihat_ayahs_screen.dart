@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../core/providers/providers.dart';
+import '../../../../core/providers/providers.dart';
 
 /// Screen 2: Mutashabihat Ayahs - Lists ayahs in a surah that contain shared phrases.
 class MutashabihatAyahsScreen extends ConsumerWidget {
