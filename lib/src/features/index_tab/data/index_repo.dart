@@ -1,13 +1,13 @@
-import 'package:quran_mutashibihat_app/files/models.dart';
+import 'package:quran_mutashibihat_app/src/core/models.dart';
 import 'package:sqflite/sqflite.dart';
 
-import 'database_helper.dart';
+import '../../../core/services/database_helper.dart';
 
 /// All read queries against app.db, one method per screen (plus a couple
 /// of shared helpers). Keeping every query in one place makes it easy to
 /// see exactly how the SDD's data flow (§3) maps to SQL.
-class MutashabihatRepository {
-  MutashabihatRepository({Database? database}) : _dbOverride = database;
+class IndexRepo {
+  IndexRepo({Database? database}) : _dbOverride = database;
 
   final Database? _dbOverride;
 
@@ -167,5 +167,46 @@ class MutashabihatRepository {
       );
     }
     return results;
+  }
+
+  // --------- Search Ayahs (for My Ayahs Add Screen) ---------
+
+  /// Search ayahs by text or surah:ayah reference
+  /// Returns AyahListItem results limited to 50
+  Future<List<AyahListItem>> searchAyahs(String query) async {
+    if (query.isEmpty) return [];
+
+    final db = await _db;
+
+    // First try to parse as "surah:ayah" format
+    if (query.contains(':')) {
+      final parts = query.split(':');
+      if (parts.length == 2) {
+        final surahParsed = int.tryParse(parts[0].trim());
+        final ayahParsed = int.tryParse(parts[1].trim());
+        if (surahParsed != null && ayahParsed != null) {
+          final rows = await db.query(
+            'ayahs',
+            where: 'surah = ? AND ayah = ?',
+            whereArgs: [surahParsed, ayahParsed],
+            limit: 1,
+          );
+          if (rows.isNotEmpty) {
+            return [AyahListItem.fromMap(rows.first)];
+          }
+          return [];
+        }
+      }
+    }
+
+    // Otherwise search by Arabic text (case-insensitive substring match)
+    final rows = await db.query(
+      'ayahs',
+      where: 'text LIKE ?',
+      whereArgs: ['%$query%'],
+      limit: 50,
+      orderBy: 'surah ASC, ayah ASC',
+    );
+    return rows.map(AyahListItem.fromMap).toList();
   }
 }
