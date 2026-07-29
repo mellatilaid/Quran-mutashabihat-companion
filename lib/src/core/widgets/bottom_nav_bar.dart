@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:quran_mutashibihat_app/src/core/extensions/build_context_extensions.dart';
 
 /// App bottom navigation bar with 4 tabs.
 /// 64px height with teal active indicator and Inter 11px labels.
@@ -15,35 +15,33 @@ class AppBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final activeColor = const Color(0xFF0F6B62); // teal
-    final inactiveColor = isDark
-        ? const Color(0xFFA29F96)
-        : const Color(0xFF5C6B67); // ink soft
-
     return BottomNavigationBar(
       currentIndex: currentIndex,
       onTap: onTap,
       type: BottomNavigationBarType.fixed,
       elevation: 8,
-      backgroundColor: isDark
-          ? const Color(0xFF1B2422)
-          : const Color(0xFFFFFFFF),
-      selectedItemColor: activeColor,
-      unselectedItemColor: inactiveColor,
-      selectedLabelStyle: GoogleFonts.inter(
-        fontSize: 11,
-        fontWeight: FontWeight.w600,
-      ),
-      unselectedLabelStyle: GoogleFonts.inter(
-        fontSize: 11,
-        fontWeight: FontWeight.w600,
-      ),
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.menu_book), label: 'Index'),
-        BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorites'),
-        BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: 'My Ayahs'),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+      backgroundColor: context.colorScheme.surface,
+      selectedItemColor: context.colorScheme.primary,
+      unselectedItemColor: context.colorScheme.onSurfaceVariant,
+      selectedLabelStyle: context.textTheme.labelSmall,
+      unselectedLabelStyle: context.textTheme.labelSmall,
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.menu_book),
+          label: context.l10n.indexTabLabel,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.favorite),
+          label: context.l10n.favoritesTabLabel,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.bookmark),
+          label: context.l10n.myAyahsTabLabel,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: context.l10n.profileTabLabel,
+        ),
       ],
     );
   }
