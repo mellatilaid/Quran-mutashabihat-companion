@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../core/extensions/build_context_extensions.dart';
 import '../../../../core/providers/providers.dart';
 
 /// Screen 2: Mutashabihat Ayahs - Lists ayahs in a surah that contain shared phrases.
-class MutashabihatAyahsScreen extends ConsumerWidget {
+class MutashabihatAyahsView extends ConsumerWidget {
   final int surahId;
 
-  const MutashabihatAyahsScreen({super.key, required this.surahId});
+  const MutashabihatAyahsView({super.key, required this.surahId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ayahsAsync = ref.watch(mutashabihatAyahsProvider(surahId));
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
       appBar: AppBar(
@@ -24,14 +23,11 @@ class MutashabihatAyahsScreen extends ConsumerWidget {
         ),
         title: Text(
           'سورة $surahId',
-          style: GoogleFonts.newsreader(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
+          style: context.textTheme.titleLarge?.copyWith(
+            color: context.colorScheme.onPrimary,
           ),
         ),
         elevation: 0,
-        backgroundColor: const Color(0xFF1B5E20),
       ),
       body: ayahsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
@@ -50,12 +46,8 @@ class MutashabihatAyahsScreen extends ConsumerWidget {
                 ),
                 title: Text(
                   ayah.text,
-                  style: GoogleFonts.amiri(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: isDark
-                        ? const Color(0xFFEDEDE4)
-                        : const Color(0xFF20302C),
+                  style: context.textTheme.bodyLarge?.copyWith(
+                    color: context.colorScheme.onSurface,
                   ),
                   textDirection: TextDirection.rtl,
                   maxLines: 2,
@@ -63,11 +55,8 @@ class MutashabihatAyahsScreen extends ConsumerWidget {
                 ),
                 subtitle: Text(
                   'Ayah ${ayah.ayah}',
-                  style: GoogleFonts.inter(
-                    fontSize: 12,
-                    color: isDark
-                        ? const Color(0xFFA29F96)
-                        : const Color(0xFF5C6B67),
+                  style: context.textTheme.labelSmall?.copyWith(
+                    color: context.colorScheme.onSurfaceVariant,
                   ),
                 ),
                 onTap: () {
