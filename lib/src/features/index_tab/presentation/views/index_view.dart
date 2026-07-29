@@ -5,6 +5,7 @@ import 'package:quran_mutashibihat_app/l10n/app_localizations.dart';
 import 'package:quran_mutashibihat_app/src/core/extensions/build_context_extensions.dart';
 
 import '../../../../core/models.dart';
+import '../../../../core/widgets/custom_widgets/custom_app_bar.dart';
 import '../../domain/providers.dart';
 
 /// Screen 1: Surah Index - Lists all 114 surahs with Mutashabihat ayah counts.
@@ -16,13 +17,7 @@ class IndexView extends ConsumerWidget {
     final surahsAsync = ref.watch(surahsProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          context.l10n.mutashabihatCompanion,
-          style: context.textTheme.displayMedium?.copyWith(),
-        ),
-        elevation: 0,
-      ),
+      appBar: CustomAppBar(title: context.l10n.mutashabihatCompanion),
       body: surahsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(

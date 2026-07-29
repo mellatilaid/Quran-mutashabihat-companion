@@ -5,6 +5,7 @@ import 'package:quran_mutashibihat_app/l10n/app_localizations.dart';
 import 'package:quran_mutashibihat_app/src/core/router.dart';
 import 'package:quran_mutashibihat_app/src/core/theme/app_theme.dart';
 
+import 'core/extensions/app_dimentions.dart';
 import 'core/providers/app_theme_provider.dart';
 
 class MutashabihatApp extends ConsumerWidget {
@@ -17,9 +18,14 @@ class MutashabihatApp extends ConsumerWidget {
     return MaterialApp.router(
       title: 'Mutashabihat Companion',
       debugShowCheckedModeBanner: false,
-      theme: Apptheme.lightTheme,
-      darkTheme: Apptheme.darkTheme,
+      theme: Apptheme.lightTheme.copyWith(
+        extensions: [AppDimensionsTheme.main()],
+      ),
+      darkTheme: Apptheme.darkTheme.copyWith(
+        extensions: [AppDimensionsTheme.main()],
+      ),
       themeMode: themeMode,
+
       routerConfig: router,
       localizationsDelegates: const [
         AppLocalizations.delegate,

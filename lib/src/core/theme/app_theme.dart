@@ -33,6 +33,14 @@ class Apptheme {
         foregroundColor: Colors.white,
         elevation: 0,
       ),
+      iconButtonTheme: IconButtonThemeData(
+        style: ButtonStyle(
+          iconColor: WidgetStateProperty.all(
+            isDark ? AppColors.darkInkSoft : AppColors.lightInkSoft,
+          ),
+          iconSize: WidgetStateProperty.all(16),
+        ),
+      ),
       colorScheme: colorScheme,
       textTheme: AppTextTheme.getTextTheme(brightness),
       inputDecorationTheme: inputDecorationTheme,
