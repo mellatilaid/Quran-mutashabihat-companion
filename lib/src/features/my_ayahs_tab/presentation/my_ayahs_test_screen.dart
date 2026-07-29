@@ -7,6 +7,7 @@ import 'package:quran_mutashibihat_app/l10n/app_localizations.dart';
 import '../../../core/models.dart';
 import '../../../core/providers/providers.dart';
 import '../../../core/widgets/widgets_index.dart';
+import '../../index_tab/domain/models/ayah_key.dart';
 
 /// My Ayahs Test Screen — flashcard test mode for bookmarked ayahs.
 /// Hint state: first 3 words + "Reveal full ayah" button

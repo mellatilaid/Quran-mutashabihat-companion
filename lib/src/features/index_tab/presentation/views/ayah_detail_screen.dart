@@ -7,6 +7,7 @@ import 'package:quran_mutashibihat_app/l10n/app_localizations.dart';
 import '../../../../core/providers/providers.dart';
 import '../../../../core/widgets/arabic_line.dart';
 import '../../../../core/widgets/pill_badge.dart';
+import '../../domain/models/ayah_key.dart';
 
 /// Screen 3: Ayah Detail - Shows a single ayah with word-level phrase highlighting.
 class AyahDetailScreen extends ConsumerStatefulWidget {

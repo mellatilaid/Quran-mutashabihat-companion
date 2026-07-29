@@ -6,6 +6,8 @@ import 'package:quran_mutashibihat_app/src/core/services/mutashabihat_repository
 import 'package:quran_mutashibihat_app/src/core/services/user_data_database_helper.dart';
 import 'package:quran_mutashibihat_app/src/core/services/user_data_repository.dart';
 
+import '../../features/index_tab/domain/models/ayah_key.dart';
+
 /// Single shared repository instance for the whole app.
 final mutashabihatRepositoryProvider = Provider<MutashabihatRepository>((ref) {
   return MutashabihatRepository();
@@ -24,21 +26,6 @@ final mutashabihatAyahsProvider =
       final repo = ref.watch(mutashabihatRepositoryProvider);
       return repo.getMutashabihatAyahs(surah);
     });
-
-/// Identifies a single ayah — used as the .family argument for Screen 3
-/// since a provider family key needs to be a single hashable value.
-class AyahKey {
-  final int surah;
-  final int ayah;
-  const AyahKey(this.surah, this.ayah);
-
-  @override
-  bool operator ==(Object other) =>
-      other is AyahKey && other.surah == surah && other.ayah == ayah;
-
-  @override
-  int get hashCode => Object.hash(surah, ayah);
-}
 
 /// Screen 3 — full detail (words + highlights) for one tapped ayah.
 /// Usage: ref.watch(ayahDetailProvider(AyahKey(2, 112)))

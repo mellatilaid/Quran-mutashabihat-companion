@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/providers/providers.dart';
 import '../../../core/widgets/widgets_index.dart';
+import '../../index_tab/domain/models/ayah_key.dart';
 
 /// My Ayahs Detail Screen — plain ayah view with personal notes.
 /// Unlike AyahDetailScreen, this shows no Mutashabihat highlights.
