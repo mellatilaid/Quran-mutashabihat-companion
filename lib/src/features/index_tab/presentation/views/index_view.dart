@@ -19,12 +19,9 @@ class IndexView extends ConsumerWidget {
       appBar: AppBar(
         title: Text(
           context.l10n.mutashabihatCompanion,
-          style: context.textTheme.displayMedium?.copyWith(
-            color: context.colorScheme.onPrimary,
-          ),
+          style: context.textTheme.displayMedium?.copyWith(),
         ),
         elevation: 0,
-        backgroundColor: context.colorScheme.primaryContainer,
       ),
       body: surahsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),

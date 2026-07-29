@@ -28,6 +28,11 @@ class Apptheme {
       useMaterial3: true,
       primaryColor: isDark ? AppColors.darkTeal : AppColors.lightTeal,
       scaffoldBackgroundColor: backgroundColor,
+      appBarTheme: AppBarTheme(
+        backgroundColor: isDark ? AppColors.darkPaper : AppColors.lightPaper,
+        foregroundColor: Colors.white,
+        elevation: 0,
+      ),
       colorScheme: colorScheme,
       textTheme: AppTextTheme.getTextTheme(brightness),
       inputDecorationTheme: inputDecorationTheme,
