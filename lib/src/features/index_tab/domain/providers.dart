@@ -24,3 +24,14 @@ final ayahDetailsProvider = FutureProvider.autoDispose
       final repo = ref.watch(indexRepoProvider);
       return repo.getAyahDetail(ayahKey.surah, ayahKey.ayah);
     });
+
+final phraseProvider = FutureProvider.family<Phrase, int>((ref, phraseId) {
+  final repo = ref.watch(indexRepoProvider);
+  return repo.getPhrase(phraseId);
+});
+
+final phraseComparisonProvider =
+    FutureProvider.family<List<PhraseOccurrenceDetail>, int>((ref, phraseId) {
+      final repo = ref.watch(indexRepoProvider);
+      return repo.getPhraseComparison(phraseId);
+    });
