@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:quran_mutashibihat_app/l10n/app_localizations.dart';
 
+import '../../../../core/extensions/build_context_extensions.dart';
 import '../../../../core/providers/providers.dart';
 import '../../../../core/widgets/arabic_line.dart';
 
@@ -17,7 +16,6 @@ class PhraseComparisonScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final comparisonAsync = ref.watch(phraseComparisonProvider(phraseId));
     final phraseAsync = ref.watch(phraseProvider(phraseId));
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
       appBar: AppBar(
@@ -26,15 +24,12 @@ class PhraseComparisonScreen extends ConsumerWidget {
           onPressed: () => context.pop(),
         ),
         title: Text(
-          AppLocalizations.of(context).comparePhrase,
-          style: GoogleFonts.newsreader(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
+          context.l10n.comparePhrase,
+          style: context.textTheme.displayMedium?.copyWith(
+            color: context.colorScheme.onPrimary,
           ),
         ),
         elevation: 0,
-        backgroundColor: const Color(0xFF1B5E20),
       ),
       body: Column(
         children: [
@@ -51,14 +46,10 @@ class PhraseComparisonScreen extends ConsumerWidget {
             data: (phrase) => Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: isDark
-                    ? const Color(0xFF1B2422)
-                    : const Color(0xFFFAFAFA),
+                color: context.colorScheme.surface,
                 border: Border(
                   bottom: BorderSide(
-                    color: isDark
-                        ? const Color(0xFF3A3428)
-                        : const Color(0xFFE2DAC7),
+                    color: context.colorScheme.outlineVariant,
                     width: 1,
                   ),
                 ),
@@ -67,13 +58,9 @@ class PhraseComparisonScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    AppLocalizations.of(context).occurrencesCount,
-                    style: GoogleFonts.inter(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: isDark
-                          ? const Color(0xFFA29F96)
-                          : const Color(0xFF5C6B67),
+                    context.l10n.occurrencesCount,
+                    style: context.textTheme.labelSmall?.copyWith(
+                      color: context.colorScheme.onSurfaceVariant,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -82,19 +69,14 @@ class PhraseComparisonScreen extends ConsumerWidget {
                     children: [
                       Text(
                         '${phrase.occurrenceCount} occurrences',
-                        style: GoogleFonts.newsreader(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xFF0F6B62),
+                        style: context.textTheme.displaySmall?.copyWith(
+                          color: context.colorScheme.primary,
                         ),
                       ),
                       Text(
                         'in ${phrase.surahCount} surahs, ${phrase.ayahCount} ayahs',
-                        style: GoogleFonts.inter(
-                          fontSize: 12,
-                          color: isDark
-                              ? const Color(0xFFA29F96)
-                              : const Color(0xFF5C6B67),
+                        style: context.textTheme.labelSmall?.copyWith(
+                          color: context.colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -132,10 +114,8 @@ class PhraseComparisonScreen extends ConsumerWidget {
                             // Location
                             Text(
                               '${occurrence.surah}:${occurrence.ayah}',
-                              style: GoogleFonts.inter(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                color: const Color(0xFF0F6B62),
+                              style: context.textTheme.labelSmall?.copyWith(
+                                color: context.colorScheme.primary,
                               ),
                             ),
                             const SizedBox(height: 8),
