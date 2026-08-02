@@ -597,6 +597,54 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تم إزالة الآية من المفضلة'**
   String get favoriteRemoved;
+
+  /// No description provided for @addNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'أضف ملاحظة'**
+  String get addNote;
+
+  /// No description provided for @editNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل الملاحظة'**
+  String get editNote;
+
+  /// No description provided for @saveNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ الملاحظة'**
+  String get saveNote;
+
+  /// No description provided for @deleteNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف الملاحظة'**
+  String get deleteNote;
+
+  /// No description provided for @addYourNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'أضف ملاحظتك هنا...'**
+  String get addYourNote;
+
+  /// Character counter for note input
+  ///
+  /// In ar, this message translates to:
+  /// **'{count}/500'**
+  String noteCharacterCount(int count);
+
+  /// No description provided for @deleteNoteConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل تريد حذف هذه الملاحظة؟'**
+  String get deleteNoteConfirm;
+
+  /// No description provided for @noteDeletedSuccessfully.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم حذف الملاحظة بنجاح'**
+  String get noteDeletedSuccessfully;
 }
 
 class _AppLocalizationsDelegate

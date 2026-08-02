@@ -272,4 +272,30 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get favoriteRemoved => 'تم إزالة الآية من المفضلة';
+
+  @override
+  String get addNote => 'أضف ملاحظة';
+
+  @override
+  String get editNote => 'تعديل الملاحظة';
+
+  @override
+  String get saveNote => 'حفظ الملاحظة';
+
+  @override
+  String get deleteNote => 'حذف الملاحظة';
+
+  @override
+  String get addYourNote => 'أضف ملاحظتك هنا...';
+
+  @override
+  String noteCharacterCount(int count) {
+    return '$count/500';
+  }
+
+  @override
+  String get deleteNoteConfirm => 'هل تريد حذف هذه الملاحظة؟';
+
+  @override
+  String get noteDeletedSuccessfully => 'تم حذف الملاحظة بنجاح';
 }

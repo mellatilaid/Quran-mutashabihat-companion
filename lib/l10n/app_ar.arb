@@ -133,5 +133,21 @@
   "addToFavorites": "أضف إلى المفضلة",
   "removeFromFavorites": "إزالة من المفضلة",
   "favoriteAdded": "تمت إضافة الآية إلى المفضلة",
-  "favoriteRemoved": "تم إزالة الآية من المفضلة"
+  "favoriteRemoved": "تم إزالة الآية من المفضلة",
+  "addNote": "أضف ملاحظة",
+  "editNote": "تعديل الملاحظة",
+  "saveNote": "حفظ الملاحظة",
+  "deleteNote": "حذف الملاحظة",
+  "addYourNote": "أضف ملاحظتك هنا...",
+  "noteCharacterCount": "{count}/500",
+  "@noteCharacterCount": {
+    "description": "Character counter for note input",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteNoteConfirm": "هل تريد حذف هذه الملاحظة؟",
+  "noteDeletedSuccessfully": "تم حذف الملاحظة بنجاح"
 }

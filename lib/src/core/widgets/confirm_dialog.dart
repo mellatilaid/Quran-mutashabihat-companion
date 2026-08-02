@@ -87,7 +87,7 @@ class ConfirmDialog extends StatelessWidget {
               Expanded(
                 child: OutlinedButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pop(false);
                     onCancel?.call();
                   },
                   style: OutlinedButton.styleFrom(
@@ -115,7 +115,7 @@ class ConfirmDialog extends StatelessWidget {
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pop(true);
                     onConfirm.call();
                   },
                   style: ElevatedButton.styleFrom(

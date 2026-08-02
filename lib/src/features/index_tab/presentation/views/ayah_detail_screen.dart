@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
 import 'package:quran_mutashibihat_app/src/core/models.dart';
 import 'package:quran_mutashibihat_app/src/core/widgets/custom_widgets/custom_loading_widget.dart';
+import 'package:quran_mutashibihat_app/src/core/widgets/confirm_dialog.dart';
 
 import '../../../../core/extensions/build_context_extensions.dart';
 import '../../../../core/providers/providers.dart';
@@ -171,9 +172,271 @@ class _AyahDetailsViewBodyState extends State<AyahDetailsViewBody> {
                     ),
                 ],
               ),
+            const SizedBox(height: 24),
+
+            // Note section
+            NoteSection(
+              surahId: widget.surahId,
+              ayahNum: widget.ayahNum,
+            ),
           ],
         ),
       ),
+    );
+  }
+}
+
+/// Note section widget for editing and displaying ayah notes
+class NoteSection extends ConsumerStatefulWidget {
+  final int surahId;
+  final int ayahNum;
+
+  const NoteSection({
+    super.key,
+    required this.surahId,
+    required this.ayahNum,
+  });
+
+  @override
+  ConsumerState<NoteSection> createState() => _NoteSectionState();
+}
+
+class _NoteSectionState extends ConsumerState<NoteSection> {
+  late TextEditingController _noteController;
+  bool _isEditing = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _noteController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _noteController.dispose();
+    super.dispose();
+  }
+
+  void _startEditing(String currentText) {
+    setState(() {
+      _isEditing = true;
+      _noteController.text = currentText;
+    });
+  }
+
+  void _cancelEditing() {
+    setState(() {
+      _isEditing = false;
+      _noteController.clear();
+    });
+  }
+
+  void _validateAndSave() {
+    final trimmedText = _noteController.text.trim();
+    
+    // Reject empty or whitespace-only text
+    if (trimmedText.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context).error),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    // Reject if over 500 chars
+    if (trimmedText.length > 500) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context).error),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    // Save the note
+    ref.read(userDataRepositoryProvider).saveNote(
+      widget.surahId,
+      widget.ayahNum,
+      trimmedText,
+    );
+    
+    // Invalidate provider to refresh
+    ref.invalidate(noteProvider(AyahKey(widget.surahId, widget.ayahNum)));
+    
+    setState(() {
+      _isEditing = false;
+      _noteController.clear();
+    });
+  }
+
+  Future<void> _showDeleteConfirm() async {
+    final confirmed = await ConfirmDialog.show(
+      context,
+      title: AppLocalizations.of(context).deleteNote,
+      message: AppLocalizations.of(context).deleteNoteConfirm,
+      confirmLabel: AppLocalizations.of(context).delete,
+      cancelLabel: AppLocalizations.of(context).cancel,
+      isDangerous: true,
+    );
+
+    if (confirmed) {
+      // Delete the note
+      await ref.read(userDataRepositoryProvider).deleteNote(
+        widget.surahId,
+        widget.ayahNum,
+      );
+
+      // Invalidate provider to refresh
+      ref.invalidate(noteProvider(AyahKey(widget.surahId, widget.ayahNum)));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final noteAsync =
+        ref.watch(noteProvider(AyahKey(widget.surahId, widget.ayahNum)));
+
+    return noteAsync.when(
+      loading: () => const SizedBox(
+        height: 100,
+        child: Center(child: CustomLoadingWidget()),
+      ),
+      error: (err, stack) => CustomErrorWidget(errString: 'Error: $err'),
+      data: (note) {
+        if (_isEditing) {
+          // Edit mode
+          return Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: context.colorScheme.surface,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: context.colorScheme.outlineVariant),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  AppLocalizations.of(context).editNote,
+                  style: context.textTheme.titleMedium,
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: _noteController,
+                  maxLines: null,
+                  maxLength: 500,
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context).addYourNote,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    counterText: '${_noteController.text.length}/500',
+                  ),
+                  onChanged: (value) {
+                    setState(() {});
+                  },
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    OutlinedButton(
+                      onPressed: _cancelEditing,
+                      child: Text(AppLocalizations.of(context).cancel),
+                    ),
+                    const SizedBox(width: 8),
+                    ElevatedButton(
+                      onPressed: _validateAndSave,
+                      child: Text(AppLocalizations.of(context).save),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        } else if (note != null) {
+          // Display saved note
+          return Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: context.colorScheme.surface,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: context.colorScheme.outlineVariant),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context).myNoteSection,
+                      style: context.textTheme.titleMedium,
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.edit),
+                          onPressed: () => _startEditing(note.noteText),
+                          tooltip: AppLocalizations.of(context).editNote,
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.delete,
+                            color: context.colorScheme.error,
+                          ),
+                          onPressed: _showDeleteConfirm,
+                          tooltip: AppLocalizations.of(context).deleteNote,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  note.noteText,
+                  style: context.textTheme.bodyMedium,
+                ),
+              ],
+            ),
+          );
+        } else {
+          // Empty state
+          return Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: context.colorScheme.surface.withValues(alpha: 0.5),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: context.colorScheme.outlineVariant.withValues(alpha: 0.5),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  AppLocalizations.of(context).myNoteSection,
+                  style: context.textTheme.titleMedium,
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  AppLocalizations.of(context).addYourNote,
+                  style: context.textTheme.bodyMedium
+                      ?.copyWith(color: context.colorScheme.onSurfaceVariant),
+                ),
+                const SizedBox(height: 12),
+                ElevatedButton.icon(
+                  onPressed: () => _startEditing(''),
+                  icon: const Icon(Icons.add),
+                  label: Text(AppLocalizations.of(context).addNote),
+                ),
+              ],
+            ),
+          );
+        }
+      },
     );
   }
 }
