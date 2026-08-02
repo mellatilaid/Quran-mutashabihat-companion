@@ -424,17 +424,41 @@ abstract class AppLocalizations {
   /// **'العبارة'**
   String get phrase;
 
-  /// No description provided for @occurrencesCount.
+  /// Phrase with ID
   ///
   /// In ar, this message translates to:
-  /// **'عدد المرات'**
-  String get occurrencesCount;
+  /// **'العبارة #{id}'**
+  String phraseNumber(int id);
+
+  /// No description provided for @occurrence.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرة'**
+  String get occurrence;
 
   /// No description provided for @occurrences.
   ///
   /// In ar, this message translates to:
   /// **'مرات'**
   String get occurrences;
+
+  /// Number of occurrences
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} {count, plural, one{مرة} other{مرات}}'**
+  String occurrenceCount(int count);
+
+  /// No description provided for @errorLoadingPhrase.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطأ في تحميل العبارة'**
+  String get errorLoadingPhrase;
+
+  /// No description provided for @occurrencesCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'عدد المرات'**
+  String get occurrencesCount;
 
   /// Format for showing surahs and ayahs count
   ///

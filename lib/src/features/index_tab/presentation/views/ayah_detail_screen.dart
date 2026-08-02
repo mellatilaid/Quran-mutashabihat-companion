@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
+import 'package:quran_mutashibihat_app/src/core/constants/app_colors.dart';
 import 'package:quran_mutashibihat_app/src/core/models.dart';
 import 'package:quran_mutashibihat_app/src/core/widgets/confirm_dialog.dart';
 import 'package:quran_mutashibihat_app/src/core/widgets/custom_widgets/custom_loading_widget.dart';
@@ -10,8 +11,20 @@ import '../../../../core/extensions/build_context_extensions.dart';
 import '../../../../core/providers/providers.dart';
 import '../../../../core/widgets/arabic_line.dart';
 import '../../../../core/widgets/custom_widgets/custom_error_widget.dart';
-import '../../../../core/widgets/pill_badge.dart';
 import '../../domain/models/ayah_key.dart';
+
+/// Gets the phrase marker color based on phrase index and theme brightness.
+/// Cycles through teal, gold, and rose (3-color palette).
+Color _getPhraseMarkerColor(int phraseIndex, Brightness brightness) {
+  final colorIndex = phraseIndex % 3;
+  final isDark = brightness == Brightness.dark;
+
+  return switch (colorIndex) {
+    0 => isDark ? AppColors.darkTeal : AppColors.lightTeal,
+    1 => isDark ? AppColors.darkGold : AppColors.lightGold,
+    _ => isDark ? AppColors.darkRose : AppColors.lightRose,
+  }.withValues(alpha: 0.5);
+}
 
 /// Screen 3: Ayah Detail - Shows a single ayah with word-level phrase highlighting.
 class AyahDetailScreen extends ConsumerWidget {
@@ -83,7 +96,7 @@ class AyahDetailScreen extends ConsumerWidget {
   }
 }
 
-class AyahDetailsViewBody extends StatefulWidget {
+class AyahDetailsViewBody extends ConsumerStatefulWidget {
   const AyahDetailsViewBody({
     super.key,
     required this.ayahDetail,
@@ -96,11 +109,22 @@ class AyahDetailsViewBody extends StatefulWidget {
   final int ayahNum;
 
   @override
-  State<AyahDetailsViewBody> createState() => _AyahDetailsViewBodyState();
+  ConsumerState<AyahDetailsViewBody> createState() =>
+      _AyahDetailsViewBodyState();
 }
 
-class _AyahDetailsViewBodyState extends State<AyahDetailsViewBody> {
+class _AyahDetailsViewBodyState extends ConsumerState<AyahDetailsViewBody> {
   int? _selectedPhraseId;
+
+  /// Build a map of phrase IDs to their marker colors.
+  Map<int, Color> _buildPhraseColorsMap(BuildContext context) {
+    final colors = <int, Color>{};
+    for (var i = 0; i < widget.ayahDetail.phraseIds.length; i++) {
+      final phraseId = widget.ayahDetail.phraseIds[i];
+      colors[phraseId] = _getPhraseMarkerColor(i, context.theme.brightness);
+    }
+    return colors;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +146,7 @@ class _AyahDetailsViewBodyState extends State<AyahDetailsViewBody> {
                 words: widget.ayahDetail.words,
                 highlights: widget.ayahDetail.highlights,
                 activePhraseId: _selectedPhraseId,
+                phraseColors: _buildPhraseColorsMap(context),
                 fontSize: 20,
               ),
             ),
@@ -133,52 +158,56 @@ class _AyahDetailsViewBodyState extends State<AyahDetailsViewBody> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    context.l10n.sharedPhrases,
-                    style: context.textTheme.titleMedium,
+                    '${context.l10n.sharedPhrases} (${widget.ayahDetail.phraseIds.length})',
+                    style: context.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: widget.ayahDetail.phraseIds.map((phraseId) {
+                  const SizedBox(height: 16),
+                  Column(
+                    spacing: 12,
+                    children: widget.ayahDetail.phraseIds.asMap().entries.map((
+                      entry,
+                    ) {
+                      final index = entry.key;
+                      final phraseId = entry.value;
                       final isSelected = _selectedPhraseId == phraseId;
-                      return GestureDetector(
+                      final markerColor = _getPhraseMarkerColor(
+                        index,
+                        Theme.of(context).brightness,
+                      );
+
+                      return _PhraseListItem(
+                        phraseId: phraseId,
+                        markerColor: markerColor,
+                        isSelected: isSelected,
                         onTap: () {
                           setState(() {
                             _selectedPhraseId = isSelected ? null : phraseId;
                           });
                         },
-                        child: PillBadge(
-                          label: '${context.l10n.phrase} $phraseId',
-                          color: context.colorScheme.primary,
-                          tone: isSelected
-                              ? PillBadgeTone.solid
-                              : PillBadgeTone.soft,
-                        ),
+                        onNavigate: () {
+                          context.go(
+                            '/surah/${widget.surahId}/ayah/${widget.surahId}/${widget.ayahNum}/phrase/$phraseId',
+                          );
+                        },
                       );
                     }).toList(),
                   ),
                   const SizedBox(height: 12),
-                  // Show comparison for selected phrase
-                  if (_selectedPhraseId != null)
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        context.go(
-                          '/surah/${widget.surahId}/ayah/${widget.surahId}/${widget.ayahNum}/phrase/$_selectedPhraseId',
-                        );
-                      },
-                      icon: const Icon(Icons.compare_arrows),
-                      label: Text(context.l10n.comparePhrase),
+                  Text(
+                    context.l10n.tapColoredDot,
+                    style: context.textTheme.bodySmall?.copyWith(
+                      color: context.colorScheme.onSurfaceVariant,
+                      fontStyle: FontStyle.italic,
                     ),
+                  ),
                 ],
               ),
             const SizedBox(height: 24),
 
             // Note section
-            NoteSection(
-              surahId: widget.surahId,
-              ayahNum: widget.ayahNum,
-            ),
+            NoteSection(surahId: widget.surahId, ayahNum: widget.ayahNum),
           ],
         ),
       ),
@@ -191,11 +220,7 @@ class NoteSection extends ConsumerStatefulWidget {
   final int surahId;
   final int ayahNum;
 
-  const NoteSection({
-    super.key,
-    required this.surahId,
-    required this.ayahNum,
-  });
+  const NoteSection({super.key, required this.surahId, required this.ayahNum});
 
   @override
   ConsumerState<NoteSection> createState() => _NoteSectionState();
@@ -233,7 +258,7 @@ class _NoteSectionState extends ConsumerState<NoteSection> {
 
   void _validateAndSave() {
     final trimmedText = _noteController.text.trim();
-    
+
     // Reject empty or whitespace-only text
     if (trimmedText.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -257,15 +282,13 @@ class _NoteSectionState extends ConsumerState<NoteSection> {
     }
 
     // Save the note
-    ref.read(userDataRepositoryProvider).saveNote(
-      widget.surahId,
-      widget.ayahNum,
-      trimmedText,
-    );
-    
+    ref
+        .read(userDataRepositoryProvider)
+        .saveNote(widget.surahId, widget.ayahNum, trimmedText);
+
     // Invalidate provider to refresh
     ref.invalidate(noteProvider(AyahKey(widget.surahId, widget.ayahNum)));
-    
+
     setState(() {
       _isEditing = false;
       _noteController.clear();
@@ -284,10 +307,9 @@ class _NoteSectionState extends ConsumerState<NoteSection> {
 
     if (confirmed) {
       // Delete the note
-      await ref.read(userDataRepositoryProvider).deleteNote(
-        widget.surahId,
-        widget.ayahNum,
-      );
+      await ref
+          .read(userDataRepositoryProvider)
+          .deleteNote(widget.surahId, widget.ayahNum);
 
       // Invalidate provider to refresh
       ref.invalidate(noteProvider(AyahKey(widget.surahId, widget.ayahNum)));
@@ -296,8 +318,9 @@ class _NoteSectionState extends ConsumerState<NoteSection> {
 
   @override
   Widget build(BuildContext context) {
-    final noteAsync =
-        ref.watch(noteProvider(AyahKey(widget.surahId, widget.ayahNum)));
+    final noteAsync = ref.watch(
+      noteProvider(AyahKey(widget.surahId, widget.ayahNum)),
+    );
 
     return noteAsync.when(
       loading: () => const SizedBox(
@@ -395,10 +418,7 @@ class _NoteSectionState extends ConsumerState<NoteSection> {
                   ],
                 ),
                 const SizedBox(height: 12),
-                Text(
-                  note.noteText,
-                  style: context.textTheme.bodyMedium,
-                ),
+                Text(note.noteText, style: context.textTheme.bodyMedium),
               ],
             ),
           );
@@ -410,7 +430,9 @@ class _NoteSectionState extends ConsumerState<NoteSection> {
               color: context.colorScheme.surface.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: context.colorScheme.outlineVariant.withValues(alpha: 0.5),
+                color: context.colorScheme.outlineVariant.withValues(
+                  alpha: 0.5,
+                ),
               ),
             ),
             child: Column(
@@ -423,8 +445,9 @@ class _NoteSectionState extends ConsumerState<NoteSection> {
                 const SizedBox(height: 12),
                 Text(
                   AppLocalizations.of(context).addYourNote,
-                  style: context.textTheme.bodyMedium
-                      ?.copyWith(color: context.colorScheme.onSurfaceVariant),
+                  style: context.textTheme.bodyMedium?.copyWith(
+                    color: context.colorScheme.onSurfaceVariant,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 ElevatedButton.icon(
@@ -436,6 +459,126 @@ class _NoteSectionState extends ConsumerState<NoteSection> {
             ),
           );
         }
+      },
+    );
+  }
+}
+
+/// Individual phrase list item with color marker and occurrence count.
+class _PhraseListItem extends ConsumerWidget {
+  final int phraseId;
+  final Color markerColor;
+  final bool isSelected;
+  final VoidCallback onTap;
+  final VoidCallback onNavigate;
+
+  const _PhraseListItem({
+    required this.phraseId,
+    required this.markerColor,
+    required this.isSelected,
+    required this.onTap,
+    required this.onNavigate,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final phraseAsync = ref.watch(phraseProvider(phraseId));
+
+    return phraseAsync.when(
+      loading: () => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          color: context.colorScheme.surface,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: context.colorScheme.outlineVariant),
+        ),
+        child: const Center(
+          child: SizedBox(
+            width: 24,
+            height: 24,
+            child: CircularProgressIndicator(strokeWidth: 2),
+          ),
+        ),
+      ),
+      error: (err, stack) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          color: context.colorScheme.errorContainer,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: context.colorScheme.error),
+        ),
+        child: Text(
+          context.l10n.errorLoadingPhrase,
+          style: context.textTheme.bodyMedium,
+        ),
+      ),
+      data: (phrase) {
+        return GestureDetector(
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: isSelected
+                  ? markerColor.withValues(alpha: 0.15)
+                  : context.colorScheme.surface,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: isSelected
+                    ? markerColor
+                    : context.colorScheme.outlineVariant,
+                width: isSelected ? 2 : 1,
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Left: Colored dot + phrase text
+                Row(
+                  children: [
+                    // Colored dot
+                    Container(
+                      width: 12,
+                      height: 12,
+                      decoration: BoxDecoration(
+                        color: markerColor,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    // Phrase text
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${context.l10n.phrase} #$phraseId',
+                          style: context.textTheme.labelLarge?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          '${phrase.occurrenceCount} ${phrase.occurrenceCount == 1 ? context.l10n.occurrence : context.l10n.occurrences}',
+                          style: context.textTheme.bodySmall?.copyWith(
+                            color: context.colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                // Right: Arrow icon
+                GestureDetector(
+                  onTap: onNavigate,
+                  child: Icon(
+                    Icons.arrow_forward_ios,
+                    size: 16,
+                    color: context.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
       },
     );
   }

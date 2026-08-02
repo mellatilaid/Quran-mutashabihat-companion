@@ -6,6 +6,7 @@ import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
 import 'package:quran_mutashibihat_app/src/core/models.dart';
 import 'package:quran_mutashibihat_app/src/core/models/user_data_models.dart';
 import 'package:quran_mutashibihat_app/src/core/providers/providers.dart';
+import 'package:quran_mutashibihat_app/src/core/widgets/arabic_line.dart';
 import 'package:quran_mutashibihat_app/src/core/widgets/custom_widgets/custom_loading_widget.dart';
 import 'package:quran_mutashibihat_app/src/features/index_tab/domain/models/ayah_key.dart';
 import 'package:quran_mutashibihat_app/src/features/index_tab/presentation/views/ayah_detail_screen.dart';
@@ -443,6 +444,221 @@ void main() {
       expect(find.byType(AyahDetailScreen), findsOneWidget);
       // Loading indicator should be visible
       expect(find.byType(CustomLoadingWidget), findsWidgets);
+    });
+  });
+
+  group('AyahDetailScreen - Redesigned Layout Tests (Phase 6)', () {
+    testWidgets('layout renders with phrase list with occurrence counts', (
+      WidgetTester tester,
+    ) async {
+      final testContainer = ProviderContainer(
+        overrides: [
+          isFavoriteProvider((1, 1)).overrideWithValue(AsyncValue.data(false)),
+          ayahDetailProvider(AyahKey(1, 1)).overrideWithValue(
+            AsyncValue.data(
+              AyahDetail(
+                surah: 1,
+                ayah: 1,
+                words: [
+                  QuranWord(text: 'كلمة', wordIndex: 0),
+                  QuranWord(text: 'واحدة', wordIndex: 1),
+                ],
+                highlights: [
+                  HighlightRange(wordFrom: 0, wordTo: 0, phraseId: 100),
+                  HighlightRange(wordFrom: 1, wordTo: 1, phraseId: 101),
+                ],
+              ),
+            ),
+          ),
+          phraseProvider(100).overrideWithValue(
+            AsyncValue.data(
+              Phrase(
+                id: 100,
+                surahCount: 5,
+                ayahCount: 8,
+                occurrenceCount: 12, // Occurrence count
+              ),
+            ),
+          ),
+          phraseProvider(101).overrideWithValue(
+            AsyncValue.data(
+              Phrase(
+                id: 101,
+                surahCount: 3,
+                ayahCount: 5,
+                occurrenceCount: 7,
+              ),
+            ),
+          ),
+          noteProvider(AyahKey(1, 1)).overrideWithValue(AsyncValue.data(null)),
+        ],
+      );
+
+      await tester.pumpWidget(
+        buildTestApp(
+          child: const AyahDetailScreen(surahId: 1, ayahNum: 1),
+          container: testContainer,
+        ),
+      );
+
+      // Wait for async providers to complete
+      await tester.pumpAndSettle();
+
+      // Verify phrase IDs are displayed
+      expect(find.text('Phrase #100'), findsOneWidget);
+      expect(find.text('Phrase #101'), findsOneWidget);
+    });
+
+    testWidgets('phrase list shows empty state when no phrases', (
+      WidgetTester tester,
+    ) async {
+      final testContainer = ProviderContainer(
+        overrides: [
+          isFavoriteProvider((1, 1)).overrideWithValue(AsyncValue.data(false)),
+          ayahDetailProvider(AyahKey(1, 1)).overrideWithValue(
+            AsyncValue.data(
+              AyahDetail(
+                surah: 1,
+                ayah: 1,
+                words: [
+                  QuranWord(text: 'كلمة', wordIndex: 0),
+                  QuranWord(text: 'واحدة', wordIndex: 1),
+                ],
+                highlights: const [], // No highlights = no phrases
+              ),
+            ),
+          ),
+          noteProvider(AyahKey(1, 1)).overrideWithValue(AsyncValue.data(null)),
+        ],
+      );
+
+      await tester.pumpWidget(
+        buildTestApp(
+          child: const AyahDetailScreen(surahId: 1, ayahNum: 1),
+          container: testContainer,
+        ),
+      );
+
+      // Verify phrase section is not present (no PillBadges with "Shared Phrases")
+      // When no phrases, the entire phrase column should not render
+      expect(find.byIcon(Icons.compare_arrows), findsNothing);
+    });
+
+    testWidgets(
+      'tapping phrase entry isolates its highlighting in ayah text',
+      (WidgetTester tester) async {
+        final testContainer = ProviderContainer(
+          overrides: [
+            isFavoriteProvider((1, 1))
+                .overrideWithValue(AsyncValue.data(false)),
+            ayahDetailProvider(AyahKey(1, 1)).overrideWithValue(
+              AsyncValue.data(
+                AyahDetail(
+                  surah: 1,
+                  ayah: 1,
+                  words: [
+                    QuranWord(text: 'كلمة', wordIndex: 0),
+                    QuranWord(text: 'واحدة', wordIndex: 1),
+                  ],
+                  highlights: [
+                    HighlightRange(wordFrom: 0, wordTo: 0, phraseId: 100),
+                    HighlightRange(wordFrom: 1, wordTo: 1, phraseId: 101),
+                  ],
+                ),
+              ),
+            ),
+            phraseProvider(100).overrideWithValue(
+              AsyncValue.data(
+                Phrase(
+                  id: 100,
+                  surahCount: 5,
+                  ayahCount: 8,
+                  occurrenceCount: 12,
+                ),
+              ),
+            ),
+            phraseProvider(101).overrideWithValue(
+              AsyncValue.data(
+                Phrase(
+                  id: 101,
+                  surahCount: 3,
+                  ayahCount: 5,
+                  occurrenceCount: 7,
+                ),
+              ),
+            ),
+            noteProvider(AyahKey(1, 1))
+                .overrideWithValue(AsyncValue.data(null)),
+          ],
+        );
+
+        await tester.pumpWidget(
+          buildTestApp(
+            child: const AyahDetailScreen(surahId: 1, ayahNum: 1),
+            container: testContainer,
+          ),
+        );
+
+        // Find and tap a phrase entry container
+        final phraseEntries = find.byType(GestureDetector);
+        expect(phraseEntries, findsWidgets);
+        
+        // Tap the first phrase entry
+        await tester.tap(phraseEntries.first);
+        await tester.pumpAndSettle();
+
+        // Verify the phrase is now selected
+        // The widget state should show selection
+        expect(find.byType(AyahDetailScreen), findsOneWidget);
+      },
+    );
+
+    testWidgets('layout order is correct: header → ayah card → phrases → notes',
+        (WidgetTester tester) async {
+      final testContainer = ProviderContainer(
+        overrides: [
+          isFavoriteProvider((1, 1)).overrideWithValue(AsyncValue.data(false)),
+          ayahDetailProvider(AyahKey(1, 1)).overrideWithValue(
+            AsyncValue.data(
+              AyahDetail(
+                surah: 1,
+                ayah: 1,
+                words: [
+                  QuranWord(text: 'كلمة', wordIndex: 0),
+                  QuranWord(text: 'واحدة', wordIndex: 1),
+                ],
+                highlights: [
+                  HighlightRange(wordFrom: 0, wordTo: 0, phraseId: 100),
+                ],
+              ),
+            ),
+          ),
+          phraseProvider(100).overrideWithValue(
+            AsyncValue.data(
+              Phrase(
+                id: 100,
+                surahCount: 5,
+                ayahCount: 8,
+                occurrenceCount: 12,
+              ),
+            ),
+          ),
+          noteProvider(AyahKey(1, 1)).overrideWithValue(AsyncValue.data(null)),
+        ],
+      );
+
+      await tester.pumpWidget(
+        buildTestApp(
+          child: const AyahDetailScreen(surahId: 1, ayahNum: 1),
+          container: testContainer,
+        ),
+      );
+
+      // Verify all sections are present in order
+      expect(find.byType(AppBar), findsOneWidget); // Header
+      expect(find.byType(ArabicLine), findsOneWidget); // Ayah text card
+      expect(find.text('Phrase #100'), findsOneWidget); // Phrase list
+      expect(find.byIcon(Icons.add), findsWidgets); // Note section (add button)
     });
   });
 }

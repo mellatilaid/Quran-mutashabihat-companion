@@ -63,9 +63,29 @@
   },
   "sharedPhrases": "العبارات المتشابهة",
   "phrase": "العبارة",
+  "phraseNumber": "العبارة #{id}",
+  "@phraseNumber": {
+    "description": "Phrase with ID",
+    "placeholders": {
+      "id": {
+        "type": "int"
+      }
+    }
+  },
+  "occurrence": "مرة",
+  "occurrences": "مرات",
+  "occurrenceCount": "{count} {count, plural, one{مرة} other{مرات}}",
+  "@occurrenceCount": {
+    "description": "Number of occurrences",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "errorLoadingPhrase": "خطأ في تحميل العبارة",
   "comparePhrase": "مقارنة العبارة",
   "occurrencesCount": "عدد المرات",
-  "occurrences": "مرات",
   "inSurahsAndAyahs": "في {surahCount} سور، {ayahCount} آيات",
   "@inSurahsAndAyahs": {
     "description": "Format for showing surahs and ayahs count",

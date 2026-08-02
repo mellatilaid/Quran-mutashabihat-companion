@@ -179,10 +179,32 @@ class AppLocalizationsAr extends AppLocalizations {
   String get phrase => 'العبارة';
 
   @override
-  String get occurrencesCount => 'عدد المرات';
+  String phraseNumber(int id) {
+    return 'العبارة #$id';
+  }
+
+  @override
+  String get occurrence => 'مرة';
 
   @override
   String get occurrences => 'مرات';
+
+  @override
+  String occurrenceCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'مرات',
+      one: 'مرة',
+    );
+    return '$count $_temp0';
+  }
+
+  @override
+  String get errorLoadingPhrase => 'خطأ في تحميل العبارة';
+
+  @override
+  String get occurrencesCount => 'عدد المرات';
 
   @override
   String inSurahsAndAyahs(int surahCount, int ayahCount) {
