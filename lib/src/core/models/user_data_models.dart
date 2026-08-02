@@ -120,3 +120,64 @@ class MyAyahListItem {
   String toString() =>
       'MyAyahListItem(id: $id, surah: $surahId, ayah: $ayahNum, note: $note, createdAt: $createdAt)';
 }
+
+/// AyahNote — personal note attached to a single ayah.
+/// Stored separately from favorites for independent management.
+class AyahNote {
+  final int id; // Primary key
+  final int surahId;
+  final int ayahNum;
+  final String noteText;
+  final DateTime updatedAt;
+
+  AyahNote({
+    required this.id,
+    required this.surahId,
+    required this.ayahNum,
+    required this.noteText,
+    required this.updatedAt,
+  });
+
+  /// Create from database map
+  factory AyahNote.fromMap(Map<String, dynamic> map) {
+    return AyahNote(
+      id: map['id'] as int,
+      surahId: map['surah_id'] as int,
+      ayahNum: map['ayah_num'] as int,
+      noteText: map['note_text'] as String,
+      updatedAt: DateTime.parse(map['updated_at'] as String),
+    );
+  }
+
+  /// Convert to database map
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'surah_id': surahId,
+      'ayah_num': ayahNum,
+      'note_text': noteText,
+      'updated_at': updatedAt.toIso8601String(),
+    };
+  }
+
+  /// Create copy with modified fields
+  AyahNote copyWith({
+    int? id,
+    int? surahId,
+    int? ayahNum,
+    String? noteText,
+    DateTime? updatedAt,
+  }) {
+    return AyahNote(
+      id: id ?? this.id,
+      surahId: surahId ?? this.surahId,
+      ayahNum: ayahNum ?? this.ayahNum,
+      noteText: noteText ?? this.noteText,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() =>
+      'AyahNote(id: $id, surah: $surahId, ayah: $ayahNum, noteText: $noteText, updatedAt: $updatedAt)';
+}

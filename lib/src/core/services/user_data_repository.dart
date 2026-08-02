@@ -164,5 +164,47 @@ class UserDataRepository {
     final db = await _databaseHelper.database;
     return db.delete('my_ayahs');
   }
+
+  // ============ Ayah Notes Operations ============
+
+  /// Get note for a specific ayah, or null if no note exists
+  Future<AyahNote?> getNote(int surahId, int ayahNum) async {
+    final db = await _databaseHelper.database;
+    final maps = await db.query(
+      'ayah_notes',
+      where: 'surah_id = ? AND ayah_num = ?',
+      whereArgs: [surahId, ayahNum],
+      limit: 1,
+    );
+    return maps.isNotEmpty ? AyahNote.fromMap(maps.first) : null;
+  }
+
+  /// Save or update a note for an ayah.
+  /// Uses insert-or-replace (via ConflictAlgorithm.replace) for upsert semantics.
+  /// Sets updated_at to the current time.
+  Future<int> saveNote(int surahId, int ayahNum, String noteText) async {
+    final db = await _databaseHelper.database;
+    return db.insert(
+      'ayah_notes',
+      {
+        'surah_id': surahId,
+        'ayah_num': ayahNum,
+        'note_text': noteText,
+        'updated_at': DateTime.now().toIso8601String(),
+      },
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  /// Delete a note for an ayah.
+  /// Returns the number of rows deleted (0 if no note existed).
+  Future<int> deleteNote(int surahId, int ayahNum) async {
+    final db = await _databaseHelper.database;
+    return db.delete(
+      'ayah_notes',
+      where: 'surah_id = ? AND ayah_num = ?',
+      whereArgs: [surahId, ayahNum],
+    );
+  }
 }
 

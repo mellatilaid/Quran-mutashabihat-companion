@@ -5,6 +5,7 @@ import 'package:quran_mutashibihat_app/src/core/models/user_data_models.dart';
 import 'package:quran_mutashibihat_app/src/core/services/mutashabihat_repository.dart';
 import 'package:quran_mutashibihat_app/src/core/services/user_data_database_helper.dart';
 import 'package:quran_mutashibihat_app/src/core/services/user_data_repository.dart';
+import 'package:quran_mutashibihat_app/src/core/constants/feature_flags.dart';
 
 import '../../features/index_tab/domain/models/ayah_key.dart';
 
@@ -215,4 +216,24 @@ final searchAyahsProvider = FutureProvider.family<List<AyahListItem>, String>((
 ) {
   final mutashabihatRepo = ref.watch(mutashabihatRepositoryProvider);
   return mutashabihatRepo.searchAyahs(query);
+});
+
+// ============ Ayah Notes Providers ============
+
+/// Get personal note for a specific ayah
+/// Usage: ref.watch(noteProvider(AyahKey(2, 112)))
+final noteProvider = FutureProvider.family<AyahNote?, AyahKey>((
+  ref,
+  key,
+) {
+  final repo = ref.watch(userDataRepositoryProvider);
+  return repo.getNote(key.surah, key.ayah);
+});
+
+// ============ Feature Flags ============
+
+/// Feature flag for mnemonic/memory tips section on Ayah Detail screen
+/// Currently disabled by default; controls visibility of that section
+final mnemonicSectionEnabledProvider = Provider<bool>((ref) {
+  return kMnemonicSectionEnabled;
 });
