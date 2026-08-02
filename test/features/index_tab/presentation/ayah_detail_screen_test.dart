@@ -482,12 +482,7 @@ void main() {
           ),
           phraseProvider(101).overrideWithValue(
             AsyncValue.data(
-              Phrase(
-                id: 101,
-                surahCount: 3,
-                ayahCount: 5,
-                occurrenceCount: 7,
-              ),
+              Phrase(id: 101, surahCount: 3, ayahCount: 5, occurrenceCount: 7),
             ),
           ),
           noteProvider(AyahKey(1, 1)).overrideWithValue(AsyncValue.data(null)),
@@ -504,9 +499,9 @@ void main() {
       // Wait for async providers to complete
       await tester.pumpAndSettle();
 
-      // Verify phrase IDs are displayed
-      expect(find.text('Phrase #100'), findsOneWidget);
-      expect(find.text('Phrase #101'), findsOneWidget);
+      // Verify phrase IDs are displayed (Arabic text)
+      expect(find.text('العبارة #100'), findsOneWidget);
+      expect(find.text('العبارة #101'), findsOneWidget);
     });
 
     testWidgets('phrase list shows empty state when no phrases', (
@@ -544,77 +539,9 @@ void main() {
       expect(find.byIcon(Icons.compare_arrows), findsNothing);
     });
 
-    testWidgets(
-      'tapping phrase entry isolates its highlighting in ayah text',
-      (WidgetTester tester) async {
-        final testContainer = ProviderContainer(
-          overrides: [
-            isFavoriteProvider((1, 1))
-                .overrideWithValue(AsyncValue.data(false)),
-            ayahDetailProvider(AyahKey(1, 1)).overrideWithValue(
-              AsyncValue.data(
-                AyahDetail(
-                  surah: 1,
-                  ayah: 1,
-                  words: [
-                    QuranWord(text: 'كلمة', wordIndex: 0),
-                    QuranWord(text: 'واحدة', wordIndex: 1),
-                  ],
-                  highlights: [
-                    HighlightRange(wordFrom: 0, wordTo: 0, phraseId: 100),
-                    HighlightRange(wordFrom: 1, wordTo: 1, phraseId: 101),
-                  ],
-                ),
-              ),
-            ),
-            phraseProvider(100).overrideWithValue(
-              AsyncValue.data(
-                Phrase(
-                  id: 100,
-                  surahCount: 5,
-                  ayahCount: 8,
-                  occurrenceCount: 12,
-                ),
-              ),
-            ),
-            phraseProvider(101).overrideWithValue(
-              AsyncValue.data(
-                Phrase(
-                  id: 101,
-                  surahCount: 3,
-                  ayahCount: 5,
-                  occurrenceCount: 7,
-                ),
-              ),
-            ),
-            noteProvider(AyahKey(1, 1))
-                .overrideWithValue(AsyncValue.data(null)),
-          ],
-        );
-
-        await tester.pumpWidget(
-          buildTestApp(
-            child: const AyahDetailScreen(surahId: 1, ayahNum: 1),
-            container: testContainer,
-          ),
-        );
-
-        // Find and tap a phrase entry container
-        final phraseEntries = find.byType(GestureDetector);
-        expect(phraseEntries, findsWidgets);
-        
-        // Tap the first phrase entry
-        await tester.tap(phraseEntries.first);
-        await tester.pumpAndSettle();
-
-        // Verify the phrase is now selected
-        // The widget state should show selection
-        expect(find.byType(AyahDetailScreen), findsOneWidget);
-      },
-    );
-
-    testWidgets('layout order is correct: header → ayah card → phrases → notes',
-        (WidgetTester tester) async {
+    testWidgets('tapping phrase entry isolates its highlighting in ayah text', (
+      WidgetTester tester,
+    ) async {
       final testContainer = ProviderContainer(
         overrides: [
           isFavoriteProvider((1, 1)).overrideWithValue(AsyncValue.data(false)),
@@ -629,18 +556,19 @@ void main() {
                 ],
                 highlights: [
                   HighlightRange(wordFrom: 0, wordTo: 0, phraseId: 100),
+                  HighlightRange(wordFrom: 1, wordTo: 1, phraseId: 101),
                 ],
               ),
             ),
           ),
           phraseProvider(100).overrideWithValue(
             AsyncValue.data(
-              Phrase(
-                id: 100,
-                surahCount: 5,
-                ayahCount: 8,
-                occurrenceCount: 12,
-              ),
+              Phrase(id: 100, surahCount: 5, ayahCount: 8, occurrenceCount: 12),
+            ),
+          ),
+          phraseProvider(101).overrideWithValue(
+            AsyncValue.data(
+              Phrase(id: 101, surahCount: 3, ayahCount: 5, occurrenceCount: 7),
             ),
           ),
           noteProvider(AyahKey(1, 1)).overrideWithValue(AsyncValue.data(null)),
@@ -654,11 +582,81 @@ void main() {
         ),
       );
 
-      // Verify all sections are present in order
-      expect(find.byType(AppBar), findsOneWidget); // Header
-      expect(find.byType(ArabicLine), findsOneWidget); // Ayah text card
-      expect(find.text('Phrase #100'), findsOneWidget); // Phrase list
-      expect(find.byIcon(Icons.add), findsWidgets); // Note section (add button)
+      // Find and tap a phrase entry container
+      final phraseEntries = find.byType(GestureDetector);
+      expect(phraseEntries, findsWidgets);
+
+      // Tap the first phrase entry
+      await tester.tap(phraseEntries.first);
+      await tester.pumpAndSettle();
+
+      // Verify the phrase is now selected
+      // The widget state should show selection
+      expect(find.byType(AyahDetailScreen), findsOneWidget);
     });
+
+    testWidgets(
+      'layout order is correct: header → ayah card → phrases → notes',
+      (WidgetTester tester) async {
+        final testContainer = ProviderContainer(
+          overrides: [
+            isFavoriteProvider((
+              1,
+              1,
+            )).overrideWithValue(AsyncValue.data(false)),
+            ayahDetailProvider(AyahKey(1, 1)).overrideWithValue(
+              AsyncValue.data(
+                AyahDetail(
+                  surah: 1,
+                  ayah: 1,
+                  words: [
+                    QuranWord(text: 'كلمة', wordIndex: 0),
+                    QuranWord(text: 'واحدة', wordIndex: 1),
+                  ],
+                  highlights: [
+                    HighlightRange(wordFrom: 0, wordTo: 0, phraseId: 100),
+                  ],
+                ),
+              ),
+            ),
+            phraseProvider(100).overrideWithValue(
+              AsyncValue.data(
+                Phrase(
+                  id: 100,
+                  surahCount: 5,
+                  ayahCount: 8,
+                  occurrenceCount: 12,
+                ),
+              ),
+            ),
+            noteProvider(
+              AyahKey(1, 1),
+            ).overrideWithValue(AsyncValue.data(null)),
+          ],
+        );
+
+        await tester.pumpWidget(
+          buildTestApp(
+            child: const AyahDetailScreen(surahId: 1, ayahNum: 1),
+            container: testContainer,
+          ),
+        );
+
+        // Wait for async providers to complete
+        await tester.pumpAndSettle();
+
+        // Verify all sections are present in order
+        expect(find.byType(AppBar), findsOneWidget); // Header
+        expect(find.byType(ArabicLine), findsOneWidget); // Ayah text card
+        expect(
+          find.text('العبارة #100'),
+          findsOneWidget,
+        ); // Phrase list (Arabic)
+        expect(
+          find.byIcon(Icons.add),
+          findsWidgets,
+        ); // Note section (add button)
+      },
+    );
   });
 }

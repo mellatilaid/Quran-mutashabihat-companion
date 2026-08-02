@@ -1,5 +1,4 @@
 ---
-
 description: "Task list for Surah Search & Ayah Detail Enhancements"
 ---
 
@@ -127,14 +126,14 @@ Single Flutter mobile project. Source under `lib/src/`, tests under `test/`, mat
 
 ### Implementation for User Story 4
 
-- [ ] T021 [US4] Define the fixed 3-color cycling phrase-marker palette using the existing `AppColors.lightTeal/lightGold/lightRose` (and dark equivalents `darkTeal/darkGold/darkRose`) in `lib/src/features/index_tab/presentation/views/ayah_detail_screen.dart`, assigned by `ayahDetail.phraseIds` list index `% 3`, theme-aware via `Theme.of(context).brightness` — per research.md §5
-- [ ] T022 [US4] Reuse `PillBadge` (`lib/src/core/widgets/pill_badge.dart`) to render each similar-phrase list entry with its assigned color marker and occurrence count sourced from `ref.watch(phraseProvider(phraseId)).occurrenceCount` (one watch per `phraseId` in `ayahDetail.phraseIds`) — depends on T021
-- [ ] T023 [US4] Restructure `lib/src/features/index_tab/presentation/views/ayah_detail_screen.dart`'s build order to: header (ref + favorite toggle from T014) → ayah text card → similar-phrases list from T022, showing an empty-state placeholder instead of an empty list when `phraseIds` is empty → mnemonic section placeholder gated behind `ref.watch(mnemonicSectionEnabledProvider)` (renders nothing while `false`) → note section from T018/T019 — depends on T014, T018, T019, T022
-- [ ] T024 [US4] Verify/preserve existing tap-to-isolate behavior: tapping a phrase entry in the restructured list highlights only that phrase's words in the ayah text above (reuse existing selected-phrase state/logic, relocated not rewritten) — depends on T023
+- [x] T021 [US4] Define the fixed 3-color cycling phrase-marker palette using the existing `AppColors.lightTeal/lightGold/lightRose` (and dark equivalents `darkTeal/darkGold/darkRose`) in `lib/src/features/index_tab/presentation/views/ayah_detail_screen.dart`, assigned by `ayahDetail.phraseIds` list index `% 3`, theme-aware via `Theme.of(context).brightness` — per research.md §5
+- [x] T022 [US4] Reuse `PillBadge` (`lib/src/core/widgets/pill_badge.dart`) to render each similar-phrase list entry with its assigned color marker and occurrence count sourced from `ref.watch(phraseProvider(phraseId)).occurrenceCount` (one watch per `phraseId` in `ayahDetail.phraseIds`) — depends on T021
+- [x] T023 [US4] Restructure `lib/src/features/index_tab/presentation/views/ayah_detail_screen.dart`'s build order to: header (ref + favorite toggle from T014) → ayah text card → similar-phrases list from T022, showing an empty-state placeholder instead of an empty list when `phraseIds` is empty → mnemonic section placeholder gated behind `ref.watch(mnemonicSectionEnabledProvider)` (renders nothing while `false`) → note section from T018/T019 — depends on T014, T018, T019, T022
+- [x] T024 [US4] Verify/preserve existing tap-to-isolate behavior: tapping a phrase entry in the restructured list highlights only that phrase's words in the ayah text above (reuse existing selected-phrase state/logic, relocated not rewritten) — depends on T023
 
 ### Tests for User Story 4
 
-- [ ] T025 [US4] Widget tests appended to `test/features/index_tab/presentation/ayah_detail_screen_test.dart`: layout renders in order (header, ayah card, phrase list, note section) for an ayah with shared phrases, each phrase entry shows a color marker and occurrence count, tapping a phrase entry isolates its highlight, the mnemonic section is absent while `kMnemonicSectionEnabled` is `false`, and an ayah with zero shared phrases shows the empty-state instead of an empty list — depends on T024
+- [x] T025 [US4] Widget tests appended to `test/features/index_tab/presentation/ayah_detail_screen_test.dart`: layout renders in order (header, ayah card, phrase list, note section) for an ayah with shared phrases, each phrase entry shows a color marker and occurrence count, tapping a phrase entry isolates its highlight, the mnemonic section is absent while `kMnemonicSectionEnabled` is `false`, and an ayah with zero shared phrases shows the empty-state instead of an empty list — depends on T024
 
 **Checkpoint**: All four user stories are independently functional and the full redesigned screen matches the reference layout.
 
@@ -144,9 +143,9 @@ Single Flutter mobile project. Source under `lib/src/`, tests under `test/`, mat
 
 **Purpose**: Final validation across all stories.
 
-- [ ] T026 Run `flutter analyze` and fix any reported issues across all touched files
-- [ ] T027 Run `flutter test` (full suite) and confirm all unit and widget tests pass
-- [ ] T028 Execute the manual validation steps in `specs/001-ayah-favorites-notes/quickstart.md` for all four user stories plus the SC-005 regression check (existing word highlighting and phrase-comparison navigation unchanged), including dark-mode/light-mode and RTL checks
+- [x] T026 Run `flutter analyze` and fix any reported issues across all touched files
+- [x] T027 Run `flutter test` (full suite) and confirm all unit and widget tests pass
+- [x] T028 Execute the manual validation steps in `specs/001-ayah-favorites-notes/quickstart.md` for all four user stories plus the SC-005 regression check (existing word highlighting and phrase-comparison navigation unchanged), including dark-mode/light-mode and RTL checks
 
 ---
 
