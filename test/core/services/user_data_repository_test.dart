@@ -159,7 +159,11 @@ void main() {
         expect(firstTimestamp, isNotNull);
         expect(secondTimestamp, isNotNull);
         // Second timestamp should be >= first timestamp
-        expect(secondTimestamp.isAfter(firstTimestamp) || secondTimestamp.isAtSameMomentAs(firstTimestamp), isTrue);
+        expect(
+          secondTimestamp.isAfter(firstTimestamp) ||
+              secondTimestamp.isAtSameMomentAs(firstTimestamp),
+          isTrue,
+        );
       });
 
       test('handles empty and whitespace-only strings', () async {
@@ -238,24 +242,27 @@ void main() {
     });
 
     group('Regression: Favorites Operations Still Work', () {
-      test('addFavorite and isFavorite work alongside note operations', () async {
-        const surahId = 1;
-        const ayahNum = 50;
+      test(
+        'addFavorite and isFavorite work alongside note operations',
+        () async {
+          const surahId = 1;
+          const ayahNum = 50;
 
-        // Add favorite
-        await repository.addFavorite(surahId, ayahNum);
-        expect(await repository.isFavorite(surahId, ayahNum), isTrue);
+          // Add favorite
+          await repository.addFavorite(surahId, ayahNum);
+          expect(await repository.isFavorite(surahId, ayahNum), isTrue);
 
-        // Save a note for the same ayah
-        await repository.saveNote(surahId, ayahNum, 'Important ayah');
+          // Save a note for the same ayah
+          await repository.saveNote(surahId, ayahNum, 'Important ayah');
 
-        // Favorite should still be there
-        expect(await repository.isFavorite(surahId, ayahNum), isTrue);
+          // Favorite should still be there
+          expect(await repository.isFavorite(surahId, ayahNum), isTrue);
 
-        // Note should be there
-        final note = await repository.getNote(surahId, ayahNum);
-        expect(note!.noteText, equals('Important ayah'));
-      });
+          // Note should be there
+          final note = await repository.getNote(surahId, ayahNum);
+          expect(note!.noteText, equals('Important ayah'));
+        },
+      );
 
       test('removeFavorite works alongside note operations', () async {
         const surahId = 2;

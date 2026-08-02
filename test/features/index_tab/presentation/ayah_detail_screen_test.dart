@@ -251,8 +251,9 @@ void main() {
           ayahDetailProvider(
             AyahKey(1, 1),
           ).overrideWithValue(AsyncValue.data(MockAyahDetail.create())),
-          noteProvider(AyahKey(1, 1))
-              .overrideWithValue(AsyncValue.data(savedNote)),
+          noteProvider(
+            AyahKey(1, 1),
+          ).overrideWithValue(AsyncValue.data(savedNote)),
         ],
       );
 
@@ -392,8 +393,9 @@ void main() {
           ayahDetailProvider(
             AyahKey(1, 1),
           ).overrideWithValue(AsyncValue.data(MockAyahDetail.create())),
-          noteProvider(AyahKey(1, 1))
-              .overrideWithValue(AsyncValue.data(savedNote)),
+          noteProvider(
+            AyahKey(1, 1),
+          ).overrideWithValue(AsyncValue.data(savedNote)),
         ],
       );
 
@@ -424,8 +426,9 @@ void main() {
           ayahDetailProvider(
             AyahKey(1, 1),
           ).overrideWithValue(AsyncValue.data(MockAyahDetail.create())),
-          noteProvider(AyahKey(1, 1))
-              .overrideWithValue(const AsyncValue.loading()),
+          noteProvider(
+            AyahKey(1, 1),
+          ).overrideWithValue(const AsyncValue.loading()),
         ],
       );
 
@@ -443,4 +446,3 @@ void main() {
     });
   });
 }
-

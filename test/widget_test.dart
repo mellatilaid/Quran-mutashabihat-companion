@@ -8,11 +8,7 @@ void main() {
   testWidgets('App smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame
     // Wrap in ProviderScope for Riverpod
-    await tester.pumpWidget(
-      const ProviderScope(
-        child: MutashabihatApp(),
-      ),
-    );
+    await tester.pumpWidget(const ProviderScope(child: MutashabihatApp()));
 
     // Verify the app builds without errors
     expect(find.byType(MutashabihatApp), findsOneWidget);

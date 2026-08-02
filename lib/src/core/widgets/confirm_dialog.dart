@@ -29,7 +29,9 @@ class ConfirmDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor = isDark ? const Color(0xFF1B2422) : const Color(0xFFFFFFFF);
-    final textColor = isDark ? const Color(0xFFEDEDE4) : const Color(0xFF20302C);
+    final textColor = isDark
+        ? const Color(0xFFEDEDE4)
+        : const Color(0xFF20302C);
     final dangerColor = const Color(0xFFA34632); // danger
     final confirmButtonColor = confirmColor ?? const Color(0xFF0F6B62); // teal
 
@@ -54,7 +56,9 @@ class ConfirmDialog extends StatelessWidget {
           Icon(
             Icons.error_outline,
             size: 48,
-            color: isDangerous ? dangerColor : const Color(0xFFFECC84), // danger or amber
+            color: isDangerous
+                ? dangerColor
+                : const Color(0xFFFECC84), // danger or amber
           ),
           const SizedBox(height: 20),
           // Title
@@ -119,7 +123,9 @@ class ConfirmDialog extends StatelessWidget {
                     onConfirm.call();
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: isDangerous ? dangerColor : confirmButtonColor,
+                    backgroundColor: isDangerous
+                        ? dangerColor
+                        : confirmButtonColor,
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
