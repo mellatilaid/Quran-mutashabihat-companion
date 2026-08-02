@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
 import 'package:quran_mutashibihat_app/src/core/models.dart';
 import 'package:quran_mutashibihat_app/src/core/widgets/custom_widgets/custom_loading_widget.dart';
-import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
 
 import '../../../../core/extensions/build_context_extensions.dart';
 import '../../../../core/providers/providers.dart';
@@ -26,8 +26,7 @@ class AyahDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ayahKey = AyahKey(surahId, ayahNum);
     final ayahAsync = ref.watch(ayahDetailProvider(ayahKey));
-    final isFavoriteAsync =
-        ref.watch(isFavoriteProvider((surahId, ayahNum)));
+    final isFavoriteAsync = ref.watch(isFavoriteProvider((surahId, ayahNum)));
 
     return Scaffold(
       appBar: AppBar(
@@ -51,19 +50,14 @@ class AyahDetailScreen extends ConsumerWidget {
                     ? AppLocalizations.of(context).removeFromFavorites
                     : AppLocalizations.of(context).addToFavorites,
                 onPressed: () async {
-                  final userDataRepository =
-                      ref.read(userDataRepositoryProvider);
+                  final userDataRepository = ref.read(
+                    userDataRepositoryProvider,
+                  );
 
                   if (isFavorite) {
-                    await userDataRepository.removeFavorite(
-                      surahId,
-                      ayahNum,
-                    );
+                    await userDataRepository.removeFavorite(surahId, ayahNum);
                   } else {
-                    await userDataRepository.addFavorite(
-                      surahId,
-                      ayahNum,
-                    );
+                    await userDataRepository.addFavorite(surahId, ayahNum);
                   }
 
                   // Invalidate the favorite providers to update UI

@@ -19,14 +19,8 @@ class MockAyahDetail {
       words: words.isNotEmpty
           ? words
           : [
-              QuranWord(
-                text: 'كلمة',
-                wordIndex: 0,
-              ),
-              QuranWord(
-                text: 'واحدة',
-                wordIndex: 1,
-              ),
+              QuranWord(text: 'كلمة', wordIndex: 0),
+              QuranWord(text: 'واحدة', wordIndex: 1),
             ],
       highlights: highlights,
     );
@@ -55,25 +49,21 @@ Widget buildTestApp({
 
 void main() {
   group('AyahDetailScreen - Favorite Toggle Tests', () {
-    testWidgets('favorite button renders in unfavorited state initially',
-        (WidgetTester tester) async {
+    testWidgets('favorite button renders in unfavorited state initially', (
+      WidgetTester tester,
+    ) async {
       final testContainer = ProviderContainer(
         overrides: [
-          isFavoriteProvider((1, 1)).overrideWithValue(
-            AsyncValue.data(false),
-          ),
-          ayahDetailProvider(AyahKey(1, 1)).overrideWithValue(
-            AsyncValue.data(MockAyahDetail.create()),
-          ),
+          isFavoriteProvider((1, 1)).overrideWithValue(AsyncValue.data(false)),
+          ayahDetailProvider(
+            AyahKey(1, 1),
+          ).overrideWithValue(AsyncValue.data(MockAyahDetail.create())),
         ],
       );
 
       await tester.pumpWidget(
         buildTestApp(
-          child: const AyahDetailScreen(
-            surahId: 1,
-            ayahNum: 1,
-          ),
+          child: const AyahDetailScreen(surahId: 1, ayahNum: 1),
           container: testContainer,
         ),
       );
@@ -83,25 +73,21 @@ void main() {
       expect(find.byIcon(Icons.favorite), findsNothing);
     });
 
-    testWidgets('favorite button renders in favorited state',
-        (WidgetTester tester) async {
+    testWidgets('favorite button renders in favorited state', (
+      WidgetTester tester,
+    ) async {
       final testContainer = ProviderContainer(
         overrides: [
-          isFavoriteProvider((1, 1)).overrideWithValue(
-            AsyncValue.data(true),
-          ),
-          ayahDetailProvider(AyahKey(1, 1)).overrideWithValue(
-            AsyncValue.data(MockAyahDetail.create()),
-          ),
+          isFavoriteProvider((1, 1)).overrideWithValue(AsyncValue.data(true)),
+          ayahDetailProvider(
+            AyahKey(1, 1),
+          ).overrideWithValue(AsyncValue.data(MockAyahDetail.create())),
         ],
       );
 
       await tester.pumpWidget(
         buildTestApp(
-          child: const AyahDetailScreen(
-            surahId: 1,
-            ayahNum: 1,
-          ),
+          child: const AyahDetailScreen(surahId: 1, ayahNum: 1),
           container: testContainer,
         ),
       );
@@ -114,21 +100,16 @@ void main() {
     testWidgets('favorite button is clickable', (WidgetTester tester) async {
       final testContainer = ProviderContainer(
         overrides: [
-          isFavoriteProvider((1, 1)).overrideWithValue(
-            AsyncValue.data(false),
-          ),
-          ayahDetailProvider(AyahKey(1, 1)).overrideWithValue(
-            AsyncValue.data(MockAyahDetail.create()),
-          ),
+          isFavoriteProvider((1, 1)).overrideWithValue(AsyncValue.data(false)),
+          ayahDetailProvider(
+            AyahKey(1, 1),
+          ).overrideWithValue(AsyncValue.data(MockAyahDetail.create())),
         ],
       );
 
       await tester.pumpWidget(
         buildTestApp(
-          child: const AyahDetailScreen(
-            surahId: 1,
-            ayahNum: 1,
-          ),
+          child: const AyahDetailScreen(surahId: 1, ayahNum: 1),
           container: testContainer,
         ),
       );
@@ -145,25 +126,21 @@ void main() {
       expect(true, true);
     });
 
-    testWidgets('favorite button has tooltip when not favorited',
-        (WidgetTester tester) async {
+    testWidgets('favorite button has tooltip when not favorited', (
+      WidgetTester tester,
+    ) async {
       final testContainer = ProviderContainer(
         overrides: [
-          isFavoriteProvider((1, 1)).overrideWithValue(
-            AsyncValue.data(false),
-          ),
-          ayahDetailProvider(AyahKey(1, 1)).overrideWithValue(
-            AsyncValue.data(MockAyahDetail.create()),
-          ),
+          isFavoriteProvider((1, 1)).overrideWithValue(AsyncValue.data(false)),
+          ayahDetailProvider(
+            AyahKey(1, 1),
+          ).overrideWithValue(AsyncValue.data(MockAyahDetail.create())),
         ],
       );
 
       await tester.pumpWidget(
         buildTestApp(
-          child: const AyahDetailScreen(
-            surahId: 1,
-            ayahNum: 1,
-          ),
+          child: const AyahDetailScreen(surahId: 1, ayahNum: 1),
           container: testContainer,
         ),
       );
@@ -171,10 +148,7 @@ void main() {
       // Hover over the favorite button to show tooltip
       await tester.pumpWidget(
         buildTestApp(
-          child: const AyahDetailScreen(
-            surahId: 1,
-            ayahNum: 1,
-          ),
+          child: const AyahDetailScreen(surahId: 1, ayahNum: 1),
           container: testContainer,
         ),
       );
@@ -183,25 +157,21 @@ void main() {
       expect(find.byIcon(Icons.favorite_border), findsOneWidget);
     });
 
-    testWidgets('favorite button renders for different surah/ayah pairs',
-        (WidgetTester tester) async {
+    testWidgets('favorite button renders for different surah/ayah pairs', (
+      WidgetTester tester,
+    ) async {
       final testContainer = ProviderContainer(
         overrides: [
-          isFavoriteProvider((5, 123)).overrideWithValue(
-            AsyncValue.data(true),
-          ),
-          ayahDetailProvider(AyahKey(5, 123)).overrideWithValue(
-            AsyncValue.data(MockAyahDetail.create()),
-          ),
+          isFavoriteProvider((5, 123)).overrideWithValue(AsyncValue.data(true)),
+          ayahDetailProvider(
+            AyahKey(5, 123),
+          ).overrideWithValue(AsyncValue.data(MockAyahDetail.create())),
         ],
       );
 
       await tester.pumpWidget(
         buildTestApp(
-          child: const AyahDetailScreen(
-            surahId: 5,
-            ayahNum: 123,
-          ),
+          child: const AyahDetailScreen(surahId: 5, ayahNum: 123),
           container: testContainer,
         ),
       );
@@ -213,21 +183,19 @@ void main() {
     testWidgets('loading state is handled', (WidgetTester tester) async {
       final testContainer = ProviderContainer(
         overrides: [
-          isFavoriteProvider((1, 1)).overrideWithValue(
-            const AsyncValue.loading(),
-          ),
-          ayahDetailProvider(AyahKey(1, 1)).overrideWithValue(
-            AsyncValue.data(MockAyahDetail.create()),
-          ),
+          isFavoriteProvider((
+            1,
+            1,
+          )).overrideWithValue(const AsyncValue.loading()),
+          ayahDetailProvider(
+            AyahKey(1, 1),
+          ).overrideWithValue(AsyncValue.data(MockAyahDetail.create())),
         ],
       );
 
       await tester.pumpWidget(
         buildTestApp(
-          child: const AyahDetailScreen(
-            surahId: 1,
-            ayahNum: 1,
-          ),
+          child: const AyahDetailScreen(surahId: 1, ayahNum: 1),
           container: testContainer,
         ),
       );
