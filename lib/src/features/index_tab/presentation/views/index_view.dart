@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
-import 'package:quran_mutashibihat_app/src/core/extensions/build_context_extensions.dart';
 import 'package:quran_mutashibihat_app/src/core/extensions/arabic_normalization.dart';
+import 'package:quran_mutashibihat_app/src/core/extensions/build_context_extensions.dart';
 
 import '../../../../core/models.dart';
 import '../../../../core/widgets/custom_widgets/custom_app_bar.dart';
@@ -66,7 +66,8 @@ class _SurahsItemListViewState extends State<SurahsItemListView> {
         _filteredSurahs = widget.surahs.where((surah) {
           final normalizedArabic = normalizeForSearch(surah.nameArabic);
           final normalizedSimple = normalizeForSearch(surah.nameSimple);
-          return normalizedArabic.contains(query) || normalizedSimple.contains(query);
+          return normalizedArabic.contains(query) ||
+              normalizedSimple.contains(query);
         }).toList();
       }
     });

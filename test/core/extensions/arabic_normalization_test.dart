@@ -61,7 +61,10 @@ void main() {
     });
 
     test('preserves Arabic letters (no letter removal)', () {
-      expect(normalizeForSearch('بسم الله الرحمن الرحيم'), 'بسم الله الرحمن الرحيم');
+      expect(
+        normalizeForSearch('بسم الله الرحمن الرحيم'),
+        'بسم الله الرحمن الرحيم',
+      );
     });
 
     test('handles Alef Wasla and special marks', () {

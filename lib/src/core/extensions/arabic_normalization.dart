@@ -22,13 +22,13 @@ String normalizeForSearch(String input) {
   // Normalize variant spellings:
   // Replace Alef Wasla (U+0671) with regular Alef (U+0627)
   String normalized = input.replaceAll('\u0671', '\u0627');
-  
+
   // Replace Alef with Madda (U+0622) with regular Alef (U+0627)
   normalized = normalized.replaceAll('\u0622', '\u0627');
-  
+
   // Replace Alef with Hamza above (U+0623) with regular Alef (U+0627)
   normalized = normalized.replaceAll('\u0623', '\u0627');
-  
+
   // Replace Alef with Hamza below (U+0625) with regular Alef (U+0627)
   normalized = normalized.replaceAll('\u0625', '\u0627');
 
