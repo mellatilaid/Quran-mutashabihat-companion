@@ -182,6 +182,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get occurrencesCount => 'عدد المرات';
 
   @override
+  String get occurrences => 'مرات';
+
+  @override
+  String inSurahsAndAyahs(int surahCount, int ayahCount) {
+    return 'في $surahCount سور، $ayahCount آيات';
+  }
+
+  @override
   String get location => 'الموقع';
 
   @override

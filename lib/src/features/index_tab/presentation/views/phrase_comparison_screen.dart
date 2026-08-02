@@ -41,7 +41,7 @@ class PhraseComparisonScreen extends ConsumerWidget {
             ),
             error: (err, _) => Padding(
               padding: const EdgeInsets.all(16),
-              child: Text('Error: $err'),
+              child: Text(context.l10n.errorMessage(err.toString())),
             ),
             data: (phrase) => Container(
               padding: const EdgeInsets.all(16),
@@ -68,13 +68,13 @@ class PhraseComparisonScreen extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '${phrase.occurrenceCount} occurrences',
+                        '${phrase.occurrenceCount} ${context.l10n.occurrences}',
                         style: context.textTheme.displaySmall?.copyWith(
                           color: context.colorScheme.primary,
                         ),
                       ),
                       Text(
-                        'in ${phrase.surahCount} surahs, ${phrase.ayahCount} ayahs',
+                        context.l10n.inSurahsAndAyahs(phrase.surahCount, phrase.ayahCount),
                         style: context.textTheme.labelSmall?.copyWith(
                           color: context.colorScheme.onSurfaceVariant,
                         ),
@@ -89,7 +89,7 @@ class PhraseComparisonScreen extends ConsumerWidget {
           Expanded(
             child: comparisonAsync.when(
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (err, _) => Center(child: Text('Error: $err')),
+              error: (err, _) => Center(child: Text(context.l10n.errorMessage(err.toString()))),
               data: (occurrences) => ListView.builder(
                 padding: const EdgeInsets.symmetric(
                   vertical: 8,

@@ -430,6 +430,18 @@ abstract class AppLocalizations {
   /// **'عدد المرات'**
   String get occurrencesCount;
 
+  /// No description provided for @occurrences.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرات'**
+  String get occurrences;
+
+  /// Format for showing surahs and ayahs count
+  ///
+  /// In ar, this message translates to:
+  /// **'في {surahCount} سور، {ayahCount} آيات'**
+  String inSurahsAndAyahs(int surahCount, int ayahCount);
+
   /// No description provided for @location.
   ///
   /// In ar, this message translates to:

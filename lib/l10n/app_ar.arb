@@ -65,6 +65,19 @@
   "phrase": "العبارة",
   "comparePhrase": "مقارنة العبارة",
   "occurrencesCount": "عدد المرات",
+  "occurrences": "مرات",
+  "inSurahsAndAyahs": "في {surahCount} سور، {ayahCount} آيات",
+  "@inSurahsAndAyahs": {
+    "description": "Format for showing surahs and ayahs count",
+    "placeholders": {
+      "surahCount": {
+        "type": "int"
+      },
+      "ayahCount": {
+        "type": "int"
+      }
+    }
+  },
   "location": "الموقع",
   "noOccurrences": "لا توجد نتائج",
   "exit": "خروج",
