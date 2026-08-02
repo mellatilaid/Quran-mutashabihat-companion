@@ -254,4 +254,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get startTestMode => 'ابدأ وضع الاختبار';
+
+  @override
+  String get searchQueryHint => 'ابحث عن السورة بالاسم';
+
+  @override
+  String get searchNoResults => 'لم يتم العثور على سور مطابقة';
 }

@@ -27,14 +27,14 @@ class UserDataDatabaseHelper {
 
   // Static database for production use (singleton)
   static Database? _database;
-  
+
   // Instance database for test injection
   Database? _injectedDatabase;
 
   Future<Database> get database async {
     // Return injected database if this instance was created via withDatabase
     if (_injectedDatabase != null) return _injectedDatabase!;
-    
+
     // Otherwise use the static singleton database
     if (_database != null) return _database!;
     _database = await _openDatabase();
@@ -107,11 +107,7 @@ class UserDataDatabaseHelper {
   }
 
   /// Handle database migrations when version changes
-  Future<void> _onUpgrade(
-    Database db,
-    int oldVersion,
-    int newVersion,
-  ) async {
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 2) {
       // Create ayah_notes table if upgrading from version 1
       await db.execute('''

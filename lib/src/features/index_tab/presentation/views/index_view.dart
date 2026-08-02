@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quran_mutashibihat_app/generated/l10n/app_localizations.dart';
 import 'package:quran_mutashibihat_app/src/core/extensions/build_context_extensions.dart';
+import 'package:quran_mutashibihat_app/src/core/extensions/arabic_normalization.dart';
 
 import '../../../../core/models.dart';
 import '../../../../core/widgets/custom_widgets/custom_app_bar.dart';
@@ -29,19 +30,103 @@ class IndexView extends ConsumerWidget {
   }
 }
 
-class SurahsItemListView extends StatelessWidget {
+class SurahsItemListView extends StatefulWidget {
   const SurahsItemListView({super.key, required this.surahs});
   final List<Surah> surahs;
 
   @override
+  State<SurahsItemListView> createState() => _SurahsItemListViewState();
+}
+
+class _SurahsItemListViewState extends State<SurahsItemListView> {
+  late TextEditingController _searchController;
+  late List<Surah> _filteredSurahs;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController();
+    _filteredSurahs = widget.surahs;
+    _searchController.addListener(_filterSurahs);
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _filterSurahs() {
+    final query = normalizeForSearch(_searchController.text);
+
+    setState(() {
+      if (query.isEmpty) {
+        _filteredSurahs = widget.surahs;
+      } else {
+        _filteredSurahs = widget.surahs.where((surah) {
+          final normalizedArabic = normalizeForSearch(surah.nameArabic);
+          final normalizedSimple = normalizeForSearch(surah.nameSimple);
+          return normalizedArabic.contains(query) || normalizedSimple.contains(query);
+        }).toList();
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-      itemCount: surahs.length,
-      itemBuilder: (context, index) {
-        final surah = surahs[index];
-        return CustomSurahItem(surah: surah);
-      },
+    return Column(
+      children: [
+        // Search field
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: TextField(
+            controller: _searchController,
+            decoration: InputDecoration(
+              hintText: context.l10n.searchQueryHint,
+              hintTextDirection: TextDirection.rtl,
+              prefixIcon: const Icon(Icons.search),
+              suffixIcon: _searchController.text.isNotEmpty
+                  ? IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: () {
+                        _searchController.clear();
+                      },
+                    )
+                  : null,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 12,
+              ),
+            ),
+            textDirection: TextDirection.rtl,
+          ),
+        ),
+        // List or empty state
+        Expanded(
+          child: _filteredSurahs.isEmpty
+              ? Center(
+                  child: Text(
+                    context.l10n.searchNoResults,
+                    style: context.textTheme.bodyMedium,
+                    textAlign: TextAlign.center,
+                  ),
+                )
+              : ListView.builder(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 12,
+                  ),
+                  itemCount: _filteredSurahs.length,
+                  itemBuilder: (context, index) {
+                    final surah = _filteredSurahs[index];
+                    return CustomSurahItem(surah: surah);
+                  },
+                ),
+        ),
+      ],
     );
   }
 }

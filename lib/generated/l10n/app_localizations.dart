@@ -561,6 +561,18 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'ابدأ وضع الاختبار'**
   String get startTestMode;
+
+  /// No description provided for @searchQueryHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابحث عن السورة بالاسم'**
+  String get searchQueryHint;
+
+  /// No description provided for @searchNoResults.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يتم العثور على سور مطابقة'**
+  String get searchNoResults;
 }
 
 class _AppLocalizationsDelegate

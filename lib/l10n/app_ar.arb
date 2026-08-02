@@ -127,5 +127,7 @@
   "keepStudying": "استمر في دراسة هذه الآيات الصعبة",
   "done": "تم",
   "emptyStateMessage": "ابدأ بإضافة محتوى",
-  "startTestMode": "ابدأ وضع الاختبار"
+  "startTestMode": "ابدأ وضع الاختبار",
+  "searchQueryHint": "ابحث عن السورة بالاسم",
+  "searchNoResults": "لم يتم العثور على سور مطابقة"
 }

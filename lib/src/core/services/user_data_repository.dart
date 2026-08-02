@@ -184,16 +184,12 @@ class UserDataRepository {
   /// Sets updated_at to the current time.
   Future<int> saveNote(int surahId, int ayahNum, String noteText) async {
     final db = await _databaseHelper.database;
-    return db.insert(
-      'ayah_notes',
-      {
-        'surah_id': surahId,
-        'ayah_num': ayahNum,
-        'note_text': noteText,
-        'updated_at': DateTime.now().toIso8601String(),
-      },
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    return db.insert('ayah_notes', {
+      'surah_id': surahId,
+      'ayah_num': ayahNum,
+      'note_text': noteText,
+      'updated_at': DateTime.now().toIso8601String(),
+    }, conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   /// Delete a note for an ayah.
@@ -207,4 +203,3 @@ class UserDataRepository {
     );
   }
 }
-
