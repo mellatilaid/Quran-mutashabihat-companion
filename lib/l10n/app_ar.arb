@@ -129,5 +129,9 @@
   "emptyStateMessage": "ابدأ بإضافة محتوى",
   "startTestMode": "ابدأ وضع الاختبار",
   "searchQueryHint": "ابحث عن السورة بالاسم",
-  "searchNoResults": "لم يتم العثور على سور مطابقة"
+  "searchNoResults": "لم يتم العثور على سور مطابقة",
+  "addToFavorites": "أضف إلى المفضلة",
+  "removeFromFavorites": "إزالة من المفضلة",
+  "favoriteAdded": "تمت إضافة الآية إلى المفضلة",
+  "favoriteRemoved": "تم إزالة الآية من المفضلة"
 }

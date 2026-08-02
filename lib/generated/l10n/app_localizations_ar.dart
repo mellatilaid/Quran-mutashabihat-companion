@@ -260,4 +260,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get searchNoResults => 'لم يتم العثور على سور مطابقة';
+
+  @override
+  String get addToFavorites => 'أضف إلى المفضلة';
+
+  @override
+  String get removeFromFavorites => 'إزالة من المفضلة';
+
+  @override
+  String get favoriteAdded => 'تمت إضافة الآية إلى المفضلة';
+
+  @override
+  String get favoriteRemoved => 'تم إزالة الآية من المفضلة';
 }

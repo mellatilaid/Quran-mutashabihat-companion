@@ -573,6 +573,30 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'لم يتم العثور على سور مطابقة'**
   String get searchNoResults;
+
+  /// No description provided for @addToFavorites.
+  ///
+  /// In ar, this message translates to:
+  /// **'أضف إلى المفضلة'**
+  String get addToFavorites;
+
+  /// No description provided for @removeFromFavorites.
+  ///
+  /// In ar, this message translates to:
+  /// **'إزالة من المفضلة'**
+  String get removeFromFavorites;
+
+  /// No description provided for @favoriteAdded.
+  ///
+  /// In ar, this message translates to:
+  /// **'تمت إضافة الآية إلى المفضلة'**
+  String get favoriteAdded;
+
+  /// No description provided for @favoriteRemoved.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم إزالة الآية من المفضلة'**
+  String get favoriteRemoved;
 }
 
 class _AppLocalizationsDelegate
