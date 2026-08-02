@@ -30,7 +30,7 @@ applyTo: "**/tasks.md **/plan.md"
 - ✅ **What was completed**: List the phase's key deliverables (tables created, functions implemented, screens built, tests passing).
 - 📋 **Checkpoint verification**: Confirm the phase's documented checkpoint is met (e.g., "Surah search is functional and testable independently").
 - ⏭️ **Next phase**: Name the next phase and its goal (e.g., "Phase 4: User Story 2 - Mark an ayah as favorite").
-- ❓ **Ready for approval?**: Explicitly ask: *"Phase X is complete. Ready to proceed to Phase Y?"* or similar.
+- ❓ **Ready for approval?**: Explicitly ask: _"Phase X is complete. Ready to proceed to Phase Y?"_ or similar.
 
 ### 4. Wait for Approval
 
@@ -43,6 +43,7 @@ applyTo: "**/tasks.md **/plan.md"
 - "Ready for Y"
 
 Approval confirms:
+
 - The phase's deliverables are validated in the running app (manual checks or automated tests pass).
 - No blocking issues remain.
 - The user is ready for the next phase's scope.
@@ -90,6 +91,7 @@ Before requesting approval, verify:
 When requesting approval:
 
 > ✅ **Phase 2 Complete**
+>
 > - `ayah_notes` table created with migration in `_onUpgrade` ✓
 > - `UserDataRepository` CRUD methods (get/save/delete) verified via unit tests ✓
 > - `normalizeForSearch` tested with diacritics and case-insensitivity ✓
@@ -113,6 +115,7 @@ Some phases explicitly depend on earlier phases (e.g., Phase 6 depends on Phases
 ### Unfinished Work in a Phase
 
 If a phase reveals unexpected work or bugs:
+
 1. Add the issue as a new task in the phase.
 2. Complete it before requesting approval.
 3. Do not skip to the next phase; stay in the current phase until all work is done.
