@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../extensions/build_context_extensions.dart';
 import '../models.dart';
 
 /// Arabic line widget with RTL Wrap and phrase highlighting support.
@@ -26,7 +26,7 @@ class ArabicLine extends StatelessWidget {
   });
 
   /// Returns highlight color for a word if it matches activePhraseId.
-  /// Uses phraseColors if available, otherwise returns null.
+  /// Uses phraseColors if available, otherwise returns tertiary color.
   Color? _getActiveHighlightColor(int wordIndex) {
     if (activePhraseId == null) return null;
 
@@ -40,17 +40,12 @@ class ArabicLine extends StatelessWidget {
 
     if (highlight.phraseId == -1) return null; // No match found
 
-    // Use phrase-specific color if available, otherwise default to amber
-    return phraseColors?[activePhraseId] ?? const Color(0xFFFECC84);
+    // Use phrase-specific color if available
+    return phraseColors?[activePhraseId];
   }
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final diffColor = isDark
-        ? const Color(0xFFE89BB4)
-        : const Color(0xFF9C4E68); // rose
-
     return Directionality(
       textDirection: textDirection,
       child: Wrap(
@@ -68,18 +63,20 @@ class ArabicLine extends StatelessWidget {
             decoration: BoxDecoration(
               color: isActive ? highlightColor : Colors.transparent,
               border: isDiff
-                  ? Border(bottom: BorderSide(color: diffColor, width: 2))
+                  ? Border(
+                      bottom: BorderSide(
+                        color: context.colorScheme.error,
+                        width: 2,
+                      ),
+                    )
                   : Border.all(color: Colors.transparent),
               borderRadius: BorderRadius.circular(4),
             ),
             child: Text(
               word.text,
-              style: GoogleFonts.amiri(
+              style: context.textTheme.bodyLarge?.copyWith(
                 fontSize: fontSize,
-                fontWeight: FontWeight.w400,
-                color: isDark
-                    ? const Color(0xFFEDEDE4)
-                    : const Color(0xFF20302C),
+                color: context.colorScheme.onSurface,
               ),
             ),
           );

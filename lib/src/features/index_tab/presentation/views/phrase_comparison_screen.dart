@@ -74,7 +74,10 @@ class PhraseComparisonScreen extends ConsumerWidget {
                         ),
                       ),
                       Text(
-                        context.l10n.inSurahsAndAyahs(phrase.surahCount, phrase.ayahCount),
+                        context.l10n.inSurahsAndAyahs(
+                          phrase.surahCount,
+                          phrase.ayahCount,
+                        ),
                         style: context.textTheme.labelSmall?.copyWith(
                           color: context.colorScheme.onSurfaceVariant,
                         ),
@@ -89,7 +92,9 @@ class PhraseComparisonScreen extends ConsumerWidget {
           Expanded(
             child: comparisonAsync.when(
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (err, _) => Center(child: Text(context.l10n.errorMessage(err.toString()))),
+              error: (err, _) => Center(
+                child: Text(context.l10n.errorMessage(err.toString())),
+              ),
               data: (occurrences) => ListView.builder(
                 padding: const EdgeInsets.symmetric(
                   vertical: 8,
@@ -100,29 +105,25 @@ class PhraseComparisonScreen extends ConsumerWidget {
                   final occurrence = occurrences[index];
                   return Card(
                     margin: const EdgeInsets.symmetric(vertical: 6),
-                    child: InkWell(
-                      onTap: () {
-                        context.go(
-                          '/surah/${occurrence.surah}/ayah/${occurrence.surah}/${occurrence.ayah}',
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            // Location
-                            Text(
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Location
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
                               '${occurrence.surah}:${occurrence.ayah}',
                               style: context.textTheme.labelSmall?.copyWith(
                                 color: context.colorScheme.primary,
                               ),
                             ),
-                            const SizedBox(height: 8),
-                            // Words with highlight
-                            ArabicLine(words: occurrence.words, fontSize: 16),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(height: 8),
+                          // Words with highlight
+                          ArabicLine(words: occurrence.words, fontSize: 16),
+                        ],
                       ),
                     ),
                   );
