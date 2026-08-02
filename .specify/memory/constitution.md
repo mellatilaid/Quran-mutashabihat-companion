@@ -1,18 +1,18 @@
 <!--
 Sync Impact Report
-- Version change: [TEMPLATE] → 1.0.0 (initial ratification)
-- Modified principles: n/a (first concrete adoption; template had 5 generic
-  placeholder slots, this version defines 4 principles matching the scope
-  requested: code quality, testing standards, UX consistency, performance)
-- Added sections: Core Principles (I-IV), Quality Gates, Development Workflow,
-  Governance
-- Removed sections: template's 5th principle placeholder (not needed — scope
-  is intentionally 4 principles)
+- Version change: 1.0.0 → 1.1.0
+- Modified principles: II. Testing Standards (NON-NEGOTIABLE) — expanded to
+  explicitly require, for every new feature (not only repository/provider
+  changes), unit tests for non-UI logic and widget tests for each new/changed
+  interactive UI element and its key states, beyond the prior coarse
+  per-screen loading/error/data check. Clarified that a spec stating explicit
+  test scope (e.g., a Success Criterion) does not waive this default.
+- Added sections: none
+- Removed sections: none
 - Templates requiring follow-up: none — plan/spec/tasks templates in
   .specify/templates/ read this file at runtime and contain no hardcoded
   references to specific principle names
-- Deferred TODOs: none — RATIFICATION_DATE set to the date of this adoption
-  since no prior ratified constitution existed
+- Deferred TODOs: none
 -->
 
 # Quran Mutashabihat App Constitution
@@ -54,6 +54,18 @@ provider family key equality (e.g., `AyahKey`), and (c) at least one widget
 test per screen verifying the loading/error/data branches render correctly.
 `flutter test` MUST pass before a change is merged. Bug fixes MUST include a
 regression test that fails without the fix and passes with it.
+
+Every new feature (not just repository/provider changes) MUST ship with unit
+tests covering its non-UI logic (data-layer/persistence code, matching or
+validation functions, derived-state computations, etc.) and widget tests
+covering its new or materially changed interactive UI (new controls, dialogs,
+input fields, list items) — not only the coarse per-screen loading/error/data
+check in (c) above, but each newly introduced interactive element and its
+key states (e.g., empty/filled, error, confirm/cancel). A feature's spec
+SHOULD state its required unit/widget test scope explicitly (as a Success
+Criterion or Clarification) so it carries through planning and task
+breakdown; absence of that statement does NOT waive this principle — the
+default coverage bar defined here still applies.
 
 Rationale: The database is externally generated and read-only, so the app's
 correctness hinges entirely on the repository and provider layer handling
@@ -132,4 +144,4 @@ development guidance (commands, file layout, provider names); this
 constitution governs the non-negotiable principles that guidance must not
 contradict.
 
-**Version**: 1.0.0 | **Ratified**: 2026-08-02 | **Last Amended**: 2026-08-02
+**Version**: 1.1.0 | **Ratified**: 2026-08-02 | **Last Amended**: 2026-08-02
